@@ -21,8 +21,8 @@ mono_crash.*
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-x64/
-x86/
+*/x64
+*/x86
 [Ww][Ii][Nn]32/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
@@ -363,5 +363,19 @@ MigrationBackup/
 FodyWeavers.xsd
 
 GeneticOptimazation.sln
-GeneticOptimazation.vcxproj
-GeneticOptimazation.vcxproj.filters
+
+*/data
+data
+x64
+
+# actual original rules
+
+*
+!*.cpp
+!*.h
+!.gitignore
+!*/
+data
+x64
+OptimazationTesting
+AdditionalResources
