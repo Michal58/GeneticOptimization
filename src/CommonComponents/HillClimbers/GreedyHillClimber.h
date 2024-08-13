@@ -13,9 +13,11 @@ class GreedyHillClimber: public GeneticOptimizer
 	Individual* theBestIndividual;
 	int countOfSameIndividualOptimazations;
 
-	Individual& individualToOptimize;
+	Individual* individualToOptimize;		// not to delete
 	bool shouldMixOrderOfOptimazation;
 	std::vector<int> orderOfOptimazation;
+
+	bool isInitialized;
 
 	void setDefalutOrderOfOptimazation();
 	void randomlyMixOptimazationOrder();
@@ -25,11 +27,17 @@ class GreedyHillClimber: public GeneticOptimizer
 
 public:
 
+	static enum GeneralOptimizerTurnOff {
+		CONFIRMATION
+	};
+
+	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation, GeneralOptimizerTurnOff turnOffConfirmation);
 	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation);
 	GreedyHillClimber(Individual& initialIndividual, bool shouldMixOrderOfOptimazation, int countOfSameIndividualOptimazations);
 	~GreedyHillClimber();
 
 	void optimizeIndividual();
+	void setIndividualToOptimize(Individual& individualToOptimize, bool shouldUpdateTheBestIndividualInWholeOptimazationProcess);
 
 	void reset() override;
 	bool isReadyToSearch() override;

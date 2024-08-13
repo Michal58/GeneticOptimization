@@ -26,7 +26,7 @@ protected:
 
 	std::vector<int>* genotype;
 
-	void registerChangesInGenotype();
+	virtual void registerChangesInGenotype();
 	virtual void setGenAt(int index, int newGen);
 	virtual void memoizeFitness(double newFitness);
 	virtual double getEvaluatedFitness();

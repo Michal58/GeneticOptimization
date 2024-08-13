@@ -12,8 +12,8 @@ void GreedyHillClimber::randomlyMixOptimazationOrder()
 
 void GreedyHillClimber::updateTheBestGenAndFitnessIfNewGenIsImprovement(int genIndex, int newGen, int& theBestGen, double& theBestFitness)
 {
-	individualToOptimize.mutateGen(genIndex, newGen);
-	double newFitness = individualToOptimize.evaluateFitness();
+	individualToOptimize->mutateGen(genIndex, newGen);
+	double newFitness = individualToOptimize->evaluateFitness();
 
 	bool isNewGenImprovement = newFitness > theBestFitness;
 	if (isNewGenImprovement)
@@ -25,11 +25,11 @@ void GreedyHillClimber::updateTheBestGenAndFitnessIfNewGenIsImprovement(int genI
 
 void GreedyHillClimber::optimizeGenAt(int index)
 {
-	std::unique_ptr<DomainIterator> genDomain = individualToOptimize.getDomain(index);
+	std::unique_ptr<DomainIterator> genDomain = individualToOptimize->getDomain(index);
 
-	int originalGen= individualToOptimize.getGenAt(index);
+	int originalGen= individualToOptimize->getGenAt(index);
 	int theBestGen = originalGen;
-	double theBestFitness = individualToOptimize.evaluateFitness();
+	double theBestFitness = individualToOptimize->evaluateFitness();
 
 	while (genDomain->hasNext())
 	{
@@ -37,27 +37,33 @@ void GreedyHillClimber::optimizeGenAt(int index)
 		updateTheBestGenAndFitnessIfNewGenIsImprovement(index, possibleGenImporvement, theBestGen, theBestFitness);
 	}
 
-	individualToOptimize.mutateGen(index, theBestGen);
-	individualToOptimize.forcelyMemoizeFitness(theBestFitness);
+	individualToOptimize->mutateGen(index, theBestGen);
+	individualToOptimize->forcelyMemoizeFitness(theBestFitness);
 }
 
 void GreedyHillClimber::updateTheBestIndividualIfNeeded()
 {
-	if (individualToOptimize.evaluateFitness() > theBestIndividual->evaluateFitness())
+	if (individualToOptimize->evaluateFitness() > theBestIndividual->evaluateFitness())
 	{
 		delete theBestIndividual;
-		theBestIndividual = individualToOptimize.clone();
+		theBestIndividual = individualToOptimize->clone();
 	}
 }
 
-GreedyHillClimber::GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation):
+GreedyHillClimber::GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation, GeneralOptimizerTurnOff turnOffConfirmation):
 	GeneticOptimizer(individualToOptimize.getOptimazationCase()),
-	individualToOptimize(individualToOptimize),
+	individualToOptimize(&individualToOptimize),
 	shouldMixOrderOfOptimazation(shouldMixOrderOfOptimazation),
 	orderOfOptimazation(individualToOptimize.getSizeOfGenotype()),
 	countOfSameIndividualOptimazations(DEFULT_COUNT_OF_SAME_INDIVIDUAL_OPTIMAZATIONS)
 {
 	setDefalutOrderOfOptimazation();
+	theBestIndividual = nullptr;
+}
+
+GreedyHillClimber::GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation) :
+	GreedyHillClimber(individualToOptimize, shouldMixOrderOfOptimazation, GeneralOptimizerTurnOff::CONFIRMATION)
+{
 	individualToOptimize.evaluateFitness();
 	theBestIndividual = individualToOptimize.clone();
 }
@@ -82,11 +88,20 @@ void GreedyHillClimber::optimizeIndividual()
 		optimizeGenAt(indexAssociatedWithGenToOptimize);
 }
 
+void GreedyHillClimber::setIndividualToOptimize(Individual& individualToOptimize, bool shouldUpdateTheBestIndividualInWholeOptimazationProcess)
+{
+	this->individualToOptimize = &individualToOptimize;
+	if (orderOfOptimazation.size() != individualToOptimize.getSizeOfGenotype())
+		setDefalutOrderOfOptimazation();
+	if (shouldUpdateTheBestIndividualInWholeOptimazationProcess)
+		updateTheBestIndividualIfNeeded();
+}
+
 void GreedyHillClimber::reset()
 {
-	individualToOptimize.fillAllGensRandomly(*Mt19937Randomizer::getSingletonInstance());
-	theBestIndividual = individualToOptimize.clone();
-	individualToOptimize.evaluateFitness();
+	individualToOptimize->fillAllGensRandomly(*Mt19937Randomizer::getSingletonInstance());
+	theBestIndividual = individualToOptimize->clone();
+	individualToOptimize->evaluateFitness();
 }
 
 bool GreedyHillClimber::isReadyToSearch()
@@ -100,7 +115,7 @@ void GreedyHillClimber::runIteration()
 		optimizeIndividual();
 	
 	updateTheBestIndividualIfNeeded();
-	individualToOptimize.fillAllGensRandomly(*Mt19937Randomizer::getSingletonInstance());
+	individualToOptimize->fillAllGensRandomly(*Mt19937Randomizer::getSingletonInstance());
 }
 
 Individual* GreedyHillClimber::peekTheBestIndividual()
