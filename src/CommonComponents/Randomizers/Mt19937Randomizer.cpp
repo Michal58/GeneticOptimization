@@ -2,7 +2,23 @@
 
 Mt19937Randomizer* const Mt19937Randomizer::RANDOMIZER_SINGLETON_INSTANCE = new Mt19937Randomizer();
 
+
 Mt19937Randomizer::Mt19937Randomizer():randomizer(randomBase()) {}
+
+Mt19937Randomizer::result_type Mt19937Randomizer::min()
+{
+	return std::mt19937::min();
+}
+
+Mt19937Randomizer::result_type Mt19937Randomizer::max()
+{
+	return std::mt19937::max();
+}
+
+Mt19937Randomizer::result_type Mt19937Randomizer::operator()()
+{
+	return randomizer();
+}
 
 Mt19937Randomizer* Mt19937Randomizer::getSingletonInstance()
 {

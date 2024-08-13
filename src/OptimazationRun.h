@@ -3,11 +3,13 @@
 #include "OptimazationTemplates/GeneticOptimizer.h"
 #include "RunArrangement/RunArrangement.h"
 #include "RunArrangement/ClassicalRunArrangementManager.h"
+#include "RunArrangement/GreedyOptimazationRunArrangementManager.h"
 
 typedef ManagerOfRunArrangement* (*arrangementMangerCreator) (OptimazationCase&);
 
 const arrangementMangerCreator ARRANGEMENT_CONSTRUCTORS[] = {
-	& ClassicalRunArrangementManager::createInstance
+	& ClassicalRunArrangementManager::createInstance,
+	& GreedyOptimazationRunArrangementManager::createInstance
 };
 
 struct OptimazationResult {

@@ -11,9 +11,10 @@ void Individual::setGenAt(int index, int newGen)
 	(*genotype)[index] = newGen;
 }
 
-void Individual::setEvaluatedFitness(double newEvaluation)
+void Individual::memoizeFitness(double newFitness)
 {
-	this->memoizedFitness = newEvaluation;
+	memoizedFitness = newFitness;
+	wasEvaluated = true;
 }
 
 double Individual::getEvaluatedFitness()
@@ -61,26 +62,41 @@ void Individual::mutateGen(int index, int newGen)
 	setGenAt(index, newGen);
 }
 
+int Individual::getSizeOfGenotype()
+{
+	return genotype->size();
+}
+
+void Individual::fillAllGensRandomly()
+{
+	fillAllGensRandomly(getDefaultRandomizer());
+}
+
 void Individual::fillAllGensRandomly(Randomizer& randomGenerator)
 {
 	registerChangesInGenotype();
 
+	genotype->resize(evaluator.getCountOfDimensions());
+
 	for (int iDomain = 0; iDomain < genotype->size(); iDomain++)
 	{
 		int diceRoll = randomGenerator.randInRange(evaluator.getCountOfDomainValues(iDomain));
-		(*genotype)[iDomain] = evaluator.getDomain(iDomain)->next(diceRoll);
+		int genToFill = evaluator.getDomain(iDomain)->next(diceRoll);
+		mutateGen(iDomain, genToFill);
 	}
+}
+
+int Individual::getGenAt(int index)
+{
+	return genotype->at(index);
 }
 
 double Individual::evaluateFitness()
 {
-	if (wasEvaluated)
-		return memoizedFitness;
-	else
-	{
-		memoizedFitness = evaluator.evaluateFitness(*genotype);
-		wasEvaluated = true;
-	}
+	if (!wasEvaluated)
+		memoizeFitness(evaluator.evaluateFitness(*genotype));
+
+	return memoizedFitness;
 }
 
 bool Individual::isFitnessEvaluated()
@@ -88,12 +104,27 @@ bool Individual::isFitnessEvaluated()
 	return wasEvaluated;
 }
 
+void Individual::forcelyMemoizeFitness(double newFitness)
+{
+	memoizeFitness(newFitness);
+}
+
 std::vector<int>* Individual::copyGenotype()
 {
 	return new std::vector<int>(*genotype);
 }
 
-int Individual::getValuesRangeAt(int index)
+OptimazationCase& Individual::getOptimazationCase()
+{
+	return evaluator;
+}
+
+int Individual::getCountOfValuesAt(int index)
 {
 	return evaluator.getCountOfDomainValues(index);
+}
+
+std::unique_ptr<DomainIterator> Individual::getDomain(int indexOfDimension)
+{
+	return evaluator.getDomain(indexOfDimension);
 }

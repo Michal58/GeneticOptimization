@@ -82,32 +82,6 @@ void ClassicalIndividual::randomlyMutateGen(int genIndex)
 	mutateGen(genIndex, diceRoll);
 }
 
-void ClassicalIndividual::fillAllGensRandomly()
-{
-	int length = evaluator.getCountOfDimensions();
-	genotype->resize(length);
-
-	for (int i = 0; i < length; i++)
-	{
-		randomlyMutateGen(i);
-	}
-}
-
-int ClassicalIndividual::getSizeOfGenotype()
-{
-	return genotype->size();
-}
-
-int ClassicalIndividual::getDomainSize(int index)
-{
-	return evaluator.getCountOfDomainValues(index);
-}
-
-void ClassicalIndividual::copyGenotypeToContainer(std::vector<int>& container)
-{
-	container = *(this->genotype);
-}
-
 ResultOfCrossover* ClassicalIndividual::crossover(Individual& donorOfGens, ParametersOfCrossover& crossoverParameters)
 {
 	int exclusiveCutIndex = ((CutIndex*)(&crossoverParameters))->exclusiveCutIndex;
@@ -119,6 +93,11 @@ ResultOfCrossover* ClassicalIndividual::crossover(Individual& donorOfGens, Param
 Individual* ClassicalIndividual::clone()
 {
 	return new ClassicalIndividual(*this);
+}
+
+Randomizer& ClassicalIndividual::getDefaultRandomizer()
+{
+	return *Mt19937Randomizer::getSingletonInstance();
 }
 
 CutIndex::CutIndex(int exclusiveCutIndex)

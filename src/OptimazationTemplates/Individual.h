@@ -28,7 +28,7 @@ protected:
 
 	void registerChangesInGenotype();
 	virtual void setGenAt(int index, int newGen);
-	virtual void setEvaluatedFitness(double newEvaluation);
+	virtual void memoizeFitness(double newFitness);
 	virtual double getEvaluatedFitness();
 
 public:
@@ -47,10 +47,19 @@ public:
 	virtual int peekGen(int index);
 	virtual void mutateGen(int index, int newGen);
 
-	virtual int getValuesRangeAt(int index);
+	virtual int getSizeOfGenotype();
+	virtual int getCountOfValuesAt(int index);
+	virtual std::unique_ptr<DomainIterator> getDomain(int indexOfDimension);
+
+	virtual Randomizer& getDefaultRandomizer() = 0;
+	virtual void fillAllGensRandomly();
 	virtual void fillAllGensRandomly(Randomizer& randomGenerator);
 
+	virtual int getGenAt(int index);
+
 	bool isFitnessEvaluated();
+	void forcelyMemoizeFitness(double newFitness);
 
 	std::vector<int>* copyGenotype();
+	OptimazationCase& getOptimazationCase();
 };

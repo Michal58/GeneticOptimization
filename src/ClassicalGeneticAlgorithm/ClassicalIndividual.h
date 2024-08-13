@@ -4,7 +4,7 @@
 #include <vector>
 #include "../OptimazationTemplates/OptimazationCase.h"
 #include "../OptimazationTemplates/Individual.h"
-#include "Mt19937Randomizer.h"
+#include "../CommonComponents/Randomizers/Mt19937Randomizer.h"
 
 class ClassicalIndividual;
 
@@ -43,17 +43,12 @@ public:
 
 	ClassicalIndividual** generateMutatntsOverGen(int genIndex, int& sizeOfArrayLengthContainer);
 
-
-	void randomlyMutateGen(int genIndex);
-	void fillAllGensRandomly();
-	int getSizeOfGenotype();
-
-	int getDomainSize(int index);
-
-	void copyGenotypeToContainer(std::vector<int>& container);
+	void ClassicalIndividual::randomlyMutateGen(int genIndex);
 
 	PairOfIndividuals crossover(ClassicalIndividual* const partner, int exclusiveCutIndex);
 	ResultOfCrossover* crossover(Individual& donorOfGens, ParametersOfCrossover& crossoverParameters) override;
 	Individual* clone() override;
+
+	Randomizer& getDefaultRandomizer() override;
 };
 
