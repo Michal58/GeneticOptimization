@@ -2,13 +2,11 @@
 #include "../OptimazationTemplates/Individual.h"
 #include "../CommonComponents/HillClimbers/GreedyHillClimber.h"
 #include "../CommonComponents//Randomizers/Mt19937Randomizer.h"
+#include "../CommonComponents/Hashing/Hashable.h"
+#include "../CommonComponents/Functionalities/Functionalities.h"
 
-class HashGetterOfP3Individual;
-class EqualityCheckerOfP3Individual;
-
-class P3Individual: public Individual
+class P3Individual: public Individual, public Hashable
 {
-	friend class EqualityCheckerOfP3Individual;
 
 	static const unsigned int HASH_ADDITION_ELEMENT = 0x9e3779b9;
 	static const unsigned int HASH_LEFT_SHIFT_DEGREE = 6;
@@ -30,30 +28,12 @@ public:
 	P3Individual(OptimazationCase& evaluator);
 	P3Individual(const P3Individual& other);
 	bool operator==(const P3Individual& other) const;
-	unsigned int getHash();
+	unsigned int getHash() override;
 	void updateHash();
+	bool equals(const Hashable& other) const override;
 	void greedilyOptimize();
 	void greedilyOptimize(GreedyHillClimber& hillClimberToUse);
 	ResultOfCrossover* crossover(Individual& donorOfGens, ParametersOfCrossover& crossoverParameters) override;
 	Individual* clone() override;
 	Randomizer& getDefaultRandomizer() override;
-};
-
-
-class HashGetterOfP3Individual
-{
-public:
-	unsigned int  operator()(P3Individual* const & individualInstance) const 
-	{
-		return individualInstance->getHash();
-	}
-};
-
-class EqualityCheckerOfP3Individual
-{
-public:
-	bool operator () (P3Individual const* firstIndividual, P3Individual const* secondIndividual) const 
-	{
-		return *firstIndividual == *secondIndividual;
-	}
 };

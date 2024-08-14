@@ -74,11 +74,6 @@ void P3Individual::greedilyOptimize(GreedyHillClimber& hillClimberToUse)
 	hillClimberToUse.optimizeIndividual();
 }
 
-ResultOfCrossover* P3Individual::crossover(Individual& donorOfGens, ParametersOfCrossover& crossoverParameters)
-{
-	return nullptr;
-}
-
 Individual* P3Individual::clone()
 {
 	return new P3Individual(*this);
@@ -87,4 +82,9 @@ Individual* P3Individual::clone()
 Randomizer& P3Individual::getDefaultRandomizer()
 {
 	return *Mt19937Randomizer::getSingletonInstance();
+}
+
+bool P3Individual::equals(const Hashable& other) const
+{
+	return isInstanceOf<P3Individual>(&other) && *this == *((P3Individual*)&other);
 }

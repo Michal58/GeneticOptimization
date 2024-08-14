@@ -1,5 +1,6 @@
 #pragma once
 #include <unordered_set>
+#include "../CommonComponents/Hashing/PointerBaseHasher.h"
 #include "../OptimazationTemplates/GeneticOptimizer.h"
 #include "P3Individual.h"
 #include "Pyramid.h"
@@ -7,12 +8,14 @@
 class ParameterLessPopulationPyramid;
 using P3 = ParameterLessPopulationPyramid;
 
+using IndividualsHashSet = std::unordered_set<P3Individual*, PointerBaseHasher<P3Individual>, PointerBaseHashablesComparator<P3Individual>>;
+
 class ParameterLessPopulationPyramid: public GeneticOptimizer
 {
 	GreedyHillClimber* commonGreedyOptimizer;
 	Individual* theBestIndividual;
 	Pyramid* populationPyramid;
-	std::unordered_set<P3Individual*, HashGetterOfP3Individual, EqualityCheckerOfP3Individual>* allDistinctIndividualsSet;
+	IndividualsHashSet* allDistinctIndividualsSet;
 
 	bool isInitialized;
 
