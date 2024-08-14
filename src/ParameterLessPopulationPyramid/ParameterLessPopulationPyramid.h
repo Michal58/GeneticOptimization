@@ -16,8 +16,7 @@ class ParameterLessPopulationPyramid: public GeneticOptimizer
 
 	bool isInitialized;
 
-	void ifIndividualIsDistinctAddItToPopulationAtDepthAndUpdateSetOfDistinctIndividuals(P3Individual& potentiallyDistinctIndividual, int depth);
-	void addSolutionAfterCrossoverToPopulationIfItIsNotWorse(P3Individual* solutionAfterCrossover, double previousEvaluation, int crossoverLevel);
+	void decideAboutUpadingPyramidWithIndividual(P3Individual& potentiallyDistinctIndividual, int potentialPyramidLevelToUpdate);
 
 public:
 
@@ -25,7 +24,7 @@ public:
 	~ParameterLessPopulationPyramid();
 
 	bool isIndividualDistinct(P3Individual& possibleDistinctIndividual);
-	void performCrossoverInPopulation(P3Individual& individualForCrossover, PopulationLevel& populationForCrossover);
+	void mixSolutionWithPopulation(P3Individual& solution, PopulationLevel& population);
 
 	void reset() override;
 	bool isReadyToSearch() override;

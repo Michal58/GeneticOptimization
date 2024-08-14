@@ -1,6 +1,7 @@
 #pragma once
 #include "../OptimazationTemplates/Individual.h"
 #include "../CommonComponents/Functionalities/Functionalities.h"
+#include "P3Individual.h"
 
 class PopulationLevel
 {

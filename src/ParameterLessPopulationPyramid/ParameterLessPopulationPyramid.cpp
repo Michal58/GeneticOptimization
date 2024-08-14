@@ -1,22 +1,15 @@
 #include "ParameterLessPopulationPyramid.h"
 
 
-void ParameterLessPopulationPyramid::ifIndividualIsDistinctAddItToPopulationAtDepthAndUpdateSetOfDistinctIndividuals(P3Individual& potentiallyDistinctIndividual, int depth)
+void ParameterLessPopulationPyramid::decideAboutUpadingPyramidWithIndividual(P3Individual& potentiallyDistinctIndividual, int potentialPyramidLevelToUpdate)
 {
     bool isIndividualDistinct = this->isIndividualDistinct(potentiallyDistinctIndividual);
     if (isIndividualDistinct)
     {
         P3Individual* actualIndividualToAdd = new P3Individual(potentiallyDistinctIndividual);
-        populationPyramid->getOrCreateNextLevelAt(depth).addIndividual(actualIndividualToAdd);
+        populationPyramid->getOrCreateNextLevelAt(potentialPyramidLevelToUpdate).addIndividual(actualIndividualToAdd);
         allDistinctIndividualsSet->insert(actualIndividualToAdd);
     }
-}
-
-void ParameterLessPopulationPyramid::addSolutionAfterCrossoverToPopulationIfItIsNotWorse(P3Individual* solutionAfterCrossover, double previousEvaluation, int crossoverLevel)
-{
-    bool isCrossoverIndividualNotWorse = solutionAfterCrossover->evaluateFitness() >= previousEvaluation;
-    if (isCrossoverIndividualNotWorse)
-        ifIndividualIsDistinctAddItToPopulationAtDepthAndUpdateSetOfDistinctIndividuals(*solutionAfterCrossover, crossoverLevel + 1);
 }
 
 ParameterLessPopulationPyramid::ParameterLessPopulationPyramid(OptimazationCase& caseInstance):
@@ -46,12 +39,14 @@ void ParameterLessPopulationPyramid::runIteration()
 {
     P3Individual currentSolutionIndividual(caseInstance);
     currentSolutionIndividual.greedilyOptimize(*commonGreedyOptimizer);
-    ifIndividualIsDistinctAddItToPopulationAtDepthAndUpdateSetOfDistinctIndividuals(currentSolutionIndividual, 0);
-    for (int i = 0; populationPyramid->hasLevelAt(i); i++)
+    decideAboutUpadingPyramidWithIndividual(currentSolutionIndividual, 0);
+    for (int iPyramidDepth = 0; populationPyramid->hasLevelAt(iPyramidDepth); iPyramidDepth++)
     {
         double startingFitness = currentSolutionIndividual.evaluateFitness();
-        performCrossoverInPopulation(currentSolutionIndividual, populationPyramid->getLevel(i));
-        addSolutionAfterCrossoverToPopulationIfItIsNotWorse(&currentSolutionIndividual, startingFitness, i);
+        mixSolutionWithPopulation(currentSolutionIndividual, populationPyramid->getLevel(iPyramidDepth));
+        bool hasFitnessImproved = currentSolutionIndividual.evaluateFitness() > startingFitness;
+        if (hasFitnessImproved)
+            decideAboutUpadingPyramidWithIndividual(currentSolutionIndividual, iPyramidDepth + 1);
     }
 }
 
