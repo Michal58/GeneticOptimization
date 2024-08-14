@@ -41,6 +41,11 @@ P3Individual::P3Individual(OptimazationCase& evaluator):
 	Individual(evaluator),
 	wasHashEvaluated(false) {}
 
+P3Individual::P3Individual(const P3Individual& other):
+	Individual(other),
+	memoizedHash(other.memoizedHash),
+	wasHashEvaluated(other.wasHashEvaluated) {}
+
 bool P3Individual::operator==(const P3Individual& other) const
 {
 	return *genotype==*other.genotype;

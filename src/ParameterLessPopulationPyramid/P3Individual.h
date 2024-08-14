@@ -28,6 +28,7 @@ protected:
 public:
 
 	P3Individual(OptimazationCase& evaluator);
+	P3Individual(const P3Individual& other);
 	bool operator==(const P3Individual& other) const;
 	unsigned int getHash();
 	void updateHash();
