@@ -5,6 +5,9 @@ void PopulationLevel::deleteIndividualsFromPopulation()
 	clearVectorOfPointers(population);
 }
 
+PopulationLevel::PopulationLevel():
+	areClustersUpToDate(false) {}
+
 PopulationLevel::~PopulationLevel()
 {
 	deleteIndividualsFromPopulation();
@@ -12,5 +15,6 @@ PopulationLevel::~PopulationLevel()
 
 void PopulationLevel::addIndividual(P3Individual* newIndividual)
 {
+	populationGenesFrequenciesLookup.updateWithIndividual(*newIndividual);
 	population.push_back(newIndividual);
 }

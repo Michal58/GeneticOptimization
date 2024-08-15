@@ -40,6 +40,8 @@ class GenesFrequenciesLookup
 	void updateFrequencyWithPair(GenesPairInGenotype pairToUpdateFrequency);
 	void updateFrequenciesKeepingFirstIndexOfMappingPairNotBiggerThanSecond(GenesPairInGenotype mappingPair, P3Individual& recentlyAddedIndividual);
 
+	void deleteMappingPairs();
+
 public:
 
 	GenesFrequenciesLookup();

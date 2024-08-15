@@ -77,6 +77,13 @@ void GenesFrequenciesLookup::updateFrequenciesKeepingFirstIndexOfMappingPairNotB
 	}
 }
 
+void GenesFrequenciesLookup::deleteMappingPairs()
+{
+	using MappingPair = std::pair<GenesPairInGenotype* const, int>;
+	for (MappingPair& currentPair : (*genesFrequenciesMapping))
+		delete currentPair.first;
+}
+
 GenesFrequenciesLookup::GenesFrequenciesLookup()
 {
 	genesFrequenciesMapping = new LookupStructure;
@@ -84,6 +91,7 @@ GenesFrequenciesLookup::GenesFrequenciesLookup()
 
 GenesFrequenciesLookup::~GenesFrequenciesLookup()
 {
+	deleteMappingPairs();
 	delete genesFrequenciesMapping;
 }
 
