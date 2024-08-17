@@ -7,17 +7,20 @@
 
 typedef ManagerOfRunArrangement* (*arrangementMangerCreator) (OptimazationCase&);
 
-const arrangementMangerCreator ARRANGEMENT_CONSTRUCTORS[] = {
+const arrangementMangerCreator ARRANGEMENT_CONSTRUCTORS[] = 
+{
 	& ClassicalRunArrangementManager::createInstance,
 	& GreedyOptimazationRunArrangementManager::createInstance
 };
 
-struct OptimazationResult {
+struct OptimazationResult 
+{
 	double fitnessValue;
 	std::vector<int>* solutionVector;		// struct only stores result, so the task of vector deletion is caller responsibility
 };
 
-class OptimazationRun {
+class OptimazationRun 
+{
 public:
 
 	const static int CLASSICAL_ARRANGEMENT_MANAGER_CODE = 0;
