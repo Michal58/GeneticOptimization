@@ -35,6 +35,23 @@ void P3Individual::greedilyOptimize(GreedyHillClimber& hillClimberToUse)
 	hillClimberToUse.optimizeIndividual();
 }
 
+ResultOfCrossover* P3Individual::crossover(Individual& donorOfGens, ParametersOfCrossover& crossoverParameters)
+{
+	ClusterBaseCrossoverParameters& actualParameters = (ClusterBaseCrossoverParameters&)crossoverParameters;
+	GeneIndexCluster& crossoverCluster=actualParameters.crossoverCluster;
+
+	std::vector<int>* previousGenesContainer = nullptr;
+	previousGenesContainer = new std::vector<int>;
+
+	for (int indexOfChange : crossoverCluster.shareIndicies())
+	{
+		previousGenesContainer->push_back((*genotype)[indexOfChange]);
+		genotype->at(indexOfChange) = donorOfGens.getGenAt(indexOfChange);
+	}
+
+	return (ResultOfCrossover*) new PreviousGenes(previousGenesContainer);
+}
+
 Individual* P3Individual::clone()
 {
 	return new P3Individual(*this);
@@ -45,7 +62,26 @@ Randomizer& P3Individual::getDefaultRandomizer()
 	return *Mt19937Randomizer::getSingletonInstance();
 }
 
+void P3Individual::revertChanges(GeneIndexCluster& clusterOfChange, std::vector<int>* previousGenes, double previousFitness)
+{
+	std::vector<int>::iterator iteratorOfPreviousGenes = previousGenes->begin();
+	for (int indexOfChange : clusterOfChange.shareIndicies())
+	{
+		genotype->at(indexOfChange) = *iteratorOfPreviousGenes;
+		iteratorOfPreviousGenes++;
+	}
+	forcelyMemoizeFitness(previousFitness);
+}
+
 bool P3Individual::equals(const Hashable& other) const
 {
 	return isInstanceOf<P3Individual>(&other) && *this == *((P3Individual*)&other);
 }
+
+PreviousGenes::PreviousGenes(std::vector<int>* previousGenes)
+{
+	this->previousGenes = previousGenes;
+}
+
+ClusterBaseCrossoverParameters::ClusterBaseCrossoverParameters(GeneIndexCluster& crossoverCluster):
+	crossoverCluster(crossoverCluster) {}

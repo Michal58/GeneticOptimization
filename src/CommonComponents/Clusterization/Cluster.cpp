@@ -14,6 +14,11 @@ bool Cluster::operator==(const Cluster& other) const
 	return this->associatedDistinctNumber==other.associatedDistinctNumber;
 }
 
+bool Cluster::isSingletonCluster()
+{
+	return cardinality() == 1;
+}
+
 unsigned int Cluster::calculateHash()
 {
 	std::hash<int> hasher;

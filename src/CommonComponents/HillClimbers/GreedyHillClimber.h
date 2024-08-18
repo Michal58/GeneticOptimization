@@ -31,6 +31,7 @@ public:
 		CONFIRMATION
 	};
 
+	GreedyHillClimber(OptimazationCase& caseToInitialize,bool shouldMixOrderOfOptimazation, GeneralOptimizerTurnOff turnOffConfirmation);
 	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation, GeneralOptimizerTurnOff turnOffConfirmation);
 	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation);
 	GreedyHillClimber(Individual& initialIndividual, bool shouldMixOrderOfOptimazation, int countOfSameIndividualOptimazations);

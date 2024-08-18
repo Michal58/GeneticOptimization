@@ -1,16 +1,16 @@
 #include "GenesFrequenciesLookup.h"
 
-GenInGenotype::GenInGenotype(int indexInGenotype, int genValue):
+GeneInGenotype::GeneInGenotype(int indexInGenotype, int genValue):
 	indexInGenotype(indexInGenotype),
 	genValue(genValue) {}
 
-bool GenInGenotype::operator==(const GenInGenotype& other) const
+bool GeneInGenotype::operator==(const GeneInGenotype& other) const
 {
 	return this->genValue == other.genValue
 		&& this->indexInGenotype == other.indexInGenotype;
 }
 
-GenesPairInGenotype::GenesPairInGenotype(GenInGenotype firstGenWithItsIndex, GenInGenotype secondGenWithItsIndex):
+GenesPairInGenotype::GenesPairInGenotype(GeneInGenotype firstGenWithItsIndex, GeneInGenotype secondGenWithItsIndex):
 	Hashable(false),
 	firstGenWithItsIndex(firstGenWithItsIndex),
 	secondGenWithItsIndex(secondGenWithItsIndex) {}
@@ -18,8 +18,8 @@ GenesPairInGenotype::GenesPairInGenotype(GenInGenotype firstGenWithItsIndex, Gen
 GenesPairInGenotype::GenesPairInGenotype(int firstIndexInGenotype, int firstGenValue, int secondIndexInGenotype, int secondGenValue):
 	GenesPairInGenotype
 	(
-		GenInGenotype(firstIndexInGenotype,firstGenValue)
-		,GenInGenotype(secondIndexInGenotype, secondGenValue)
+		GeneInGenotype(firstIndexInGenotype,firstGenValue)
+		,GeneInGenotype(secondIndexInGenotype, secondGenValue)
 	) {}
 
 bool GenesPairInGenotype::equals(const Hashable& other) const
@@ -84,7 +84,8 @@ void GenesFrequenciesLookup::deleteMappingPairs()
 		delete currentPair.first;
 }
 
-GenesFrequenciesLookup::GenesFrequenciesLookup()
+GenesFrequenciesLookup::GenesFrequenciesLookup():
+	countOfConsideredGenotypes(0)
 {
 	genesFrequenciesMapping = new LookupStructure;
 }
@@ -95,7 +96,12 @@ GenesFrequenciesLookup::~GenesFrequenciesLookup()
 	delete genesFrequenciesMapping;
 }
 
-int GenesFrequenciesLookup::getFrequencyOfSingleGenInGenotypes(GenInGenotype genAndItsIndex)
+int GenesFrequenciesLookup::getCountOfConsideredGenotypes()
+{
+	return countOfConsideredGenotypes;
+}
+
+int GenesFrequenciesLookup::getFrequencyOfSingleGenInGenotypes(GeneInGenotype genAndItsIndex)
 {
 	GenesPairInGenotype unionOfSameElements(genAndItsIndex, genAndItsIndex);
 	return getFrequencyOfGenesPairInGenotypes(unionOfSameElements);
@@ -117,4 +123,7 @@ void GenesFrequenciesLookup::updateWithIndividual(P3Individual& recentlyAddedInd
 		GenesPairInGenotype initialPair(iMainGenIndex, valueOfMainGen, iMainGenIndex, valueOfMainGen);
 		updateFrequenciesKeepingFirstIndexOfMappingPairNotBiggerThanSecond(initialPair, recentlyAddedIndividual);
 	}
+
+	countOfConsideredGenotypes++;
 }
+

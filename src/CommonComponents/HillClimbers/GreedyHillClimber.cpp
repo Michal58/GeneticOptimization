@@ -50,6 +50,17 @@ void GreedyHillClimber::updateTheBestIndividualIfNeeded()
 	}
 }
 
+GreedyHillClimber::GreedyHillClimber(OptimazationCase& caseToInitialize,bool shouldMixOrderOfOptimazation, GeneralOptimizerTurnOff turnOffConfirmation):
+	GeneticOptimizer(caseToInitialize),
+	individualToOptimize(nullptr),
+	shouldMixOrderOfOptimazation(shouldMixOrderOfOptimazation),
+	orderOfOptimazation(caseToInitialize.getCountOfDimensions()),
+	countOfSameIndividualOptimazations(DEFULT_COUNT_OF_SAME_INDIVIDUAL_OPTIMAZATIONS)
+{
+	setDefalutOrderOfOptimazation();
+	theBestIndividual = nullptr;
+}
+
 GreedyHillClimber::GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation, GeneralOptimizerTurnOff turnOffConfirmation):
 	GeneticOptimizer(individualToOptimize.getOptimazationCase()),
 	individualToOptimize(&individualToOptimize),

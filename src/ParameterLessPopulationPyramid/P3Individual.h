@@ -4,6 +4,19 @@
 #include "../CommonComponents//Randomizers/Mt19937Randomizer.h"
 #include "../CommonComponents/Hashing/Hashable.h"
 #include "../CommonComponents/Functionalities/Functionalities.h"
+#include "GeneIndexCluster.h"
+
+struct ClusterBaseCrossoverParameters: public ParametersOfCrossover
+{
+	GeneIndexCluster& crossoverCluster;
+	ClusterBaseCrossoverParameters(GeneIndexCluster& crossoverCluster);
+};
+
+struct PreviousGenes
+{
+	std::vector<int>* previousGenes;
+	PreviousGenes(std::vector<int>*  previousGenes);
+};
 
 class P3Individual: public Individual, public Hashable
 {
@@ -23,4 +36,5 @@ public:
 	ResultOfCrossover* crossover(Individual& donorOfGens, ParametersOfCrossover& crossoverParameters) override;
 	Individual* clone() override;
 	Randomizer& getDefaultRandomizer() override;
+	void revertChanges(GeneIndexCluster& clusterOfChange, std::vector<int>* previousGenes, double previousFitness);
 };

@@ -34,10 +34,7 @@ bool DistancesLookup::isThereClusterPair(ClustersPair pairToCheck)
 
 Cluster* DistancesLookup::mergeClusters(const Cluster& firstToMerge, const Cluster& secondToMerge)
 {
-	Cluster* copyToMergeInto = firstToMerge.getCopy(firstToMerge);
-	copyToMergeInto->mergeWithOther(secondToMerge);
-
-	return copyToMergeInto;
+	return firstToMerge.getMergedCluster(secondToMerge, firstToMerge.proposeDistinctNumber());
 }
 
 double DistancesLookup::calculateCkDistanceToCiCjUnion(Cluster& Ck, Cluster& Ci, Cluster& Cj)
@@ -130,4 +127,14 @@ std::vector<ClustersPair> DistancesLookup::getKeysOfMap()
 int DistancesLookup::allClustersCardinality()
 {
 	return allSingleClusters.size();
+}
+
+ClustersSet& InitializerOfDistancesLookup::accessSingleClusters(DistancesLookup& lookupToAccess)
+{
+	return lookupToAccess.allSingleClusters;
+}
+
+DistancesLookup::ClusterPairsToDistances& InitializerOfDistancesLookup::accessDistancesMap(DistancesLookup& lookupToAccess)
+{
+	return lookupToAccess.distancesMap;
 }

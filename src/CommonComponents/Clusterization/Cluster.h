@@ -10,11 +10,15 @@ class Cluster: public Hashable
 public:
 
 	Cluster(int associatedDistinctNumber);
+
 	int getAssociatedDistincNumber() const;
 	bool operator==(const Cluster& other) const;
-	virtual bool isSingletonCluster() = 0;
-	virtual void mergeWithOther(const Cluster& other) = 0;
-	virtual Cluster* getCopy(const Cluster& other) const = 0;
+	virtual bool isSingletonCluster();
+
+	virtual Cluster* getMergedCluster(const Cluster& toMerge, int distinctNumberForMerged) const = 0;
+	virtual int proposeDistinctNumber() const = 0;
+
+	virtual Cluster* getCopy() const = 0;
 	virtual int cardinality() = 0;
 
 	unsigned int calculateHash() override;

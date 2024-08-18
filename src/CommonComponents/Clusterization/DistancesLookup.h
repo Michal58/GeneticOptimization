@@ -8,6 +8,8 @@
 
 #define DISTANCE_DOESNT_EXIST_ERROR_MESSAGE "Distance doesn't exist"
 
+class InitializerOfDistancesLookup;
+
 struct ClustersPair: public Hashable
 {
 	Cluster& firstCluster;
@@ -19,19 +21,12 @@ struct ClustersPair: public Hashable
 	bool equals(const Hashable& other) const override;
 };
 
-class InitializerOfDistancesLookup
-{
-public:
-	virtual void initializeDistancesLookup(DistancesLookup& distancesToInitialize) = 0;
-};
-
 using ClustersSet = std::unordered_set<Cluster*, PointerBaseHasher<Cluster>, PointerBaseHashablesComparator<Cluster>>;
+using ClusterPairsToDistances = std::unordered_map<ClustersPair, double, ObjectBaseHasher<ClustersPair>, ObjectBaseHashablesComparator<ClustersPair>>;
 
 class DistancesLookup
 {
 	friend class InitializerOfDistancesLookup;
-
-	using ClusterPairsToDistances = std::unordered_map<ClustersPair, double, ObjectBaseHasher<ClustersPair>, ObjectBaseHashablesComparator<ClustersPair>>;
 
 	ClustersSet allSingleClusters;			// we aren't responsible for clusters deallocation in this case
 	ClusterPairsToDistances distancesMap;	
@@ -55,3 +50,14 @@ public:
 	int allClustersCardinality();
 };
 
+
+class InitializerOfDistancesLookup
+{
+protected:
+
+	ClustersSet& accessSingleClusters(DistancesLookup& lookupToAccess);
+	ClusterPairsToDistances& accessDistancesMap(DistancesLookup& lookupToAccess);
+
+public:
+	virtual void initializeDistancesLookup(DistancesLookup& distancesToInitialize) = 0;
+};

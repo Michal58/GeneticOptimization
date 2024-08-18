@@ -6,6 +6,7 @@ ClusterizationPerformer::ClusterizationPerformer(SelectorOfClustersMerging& clus
 std::vector<Cluster*>* ClusterizationPerformer::perfromClusterization(DistancesLookup& distances, bool notAddClustersWithZeroDistances)
 {
     std::vector<Cluster*>* allClusters = new std::vector<Cluster*>;
+    std::vector<Cluster*> clustersToDelete;
     
     clustersToMergeSelector.setAssociatedLookup(distances);
     
@@ -22,8 +23,16 @@ std::vector<Cluster*>* ClusterizationPerformer::perfromClusterization(DistancesL
             allClusters->push_back(firstClusterToMerge);
             allClusters->push_back(secondClusterToMerge);
         }
+        else
+        {
+            clustersToDelete.push_back(firstClusterToMerge);
+            clustersToDelete.push_back(secondClusterToMerge);
+        }
     }
 
     allClusters->push_back(*distances.shareAllSingleClusters().begin());
+
+    clearVectorOfPointers(clustersToDelete);
+
     return allClusters;
 }

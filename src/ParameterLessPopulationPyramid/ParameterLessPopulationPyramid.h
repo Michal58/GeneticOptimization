@@ -20,6 +20,7 @@ class ParameterLessPopulationPyramid: public GeneticOptimizer
 	bool isInitialized;
 
 	void decideAboutUpadingPyramidWithIndividual(P3Individual& potentiallyDistinctIndividual, int potentialPyramidLevelToUpdate);
+	void tryToImproveSolutionWithCluster(GeneIndexCluster& clusterOfChange, P3Individual& solution, PopulationLevel& population);
 
 public:
 

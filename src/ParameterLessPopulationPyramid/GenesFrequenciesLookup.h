@@ -5,23 +5,23 @@
 #include "../CommonComponents/Functionalities/Functionalities.h"
 #include "../CommonComponents/Hashing/PointerBaseHasher.h"
 
-struct GenInGenotype
+struct GeneInGenotype
 {
 	int indexInGenotype;
 	int genValue;
 
-	GenInGenotype(int indexInGenotype, int genValue);
-	bool operator==(const GenInGenotype& other) const;
+	GeneInGenotype(int indexInGenotype, int genValue);
+	bool operator==(const GeneInGenotype& other) const;
 };
 
 struct GenesPairInGenotype: public Hashable
 {
 	static const int COUNT_OF_BASE_ELEMENTS = 4;
 
-	GenInGenotype firstGenWithItsIndex;
-	GenInGenotype secondGenWithItsIndex;
+	GeneInGenotype firstGenWithItsIndex;
+	GeneInGenotype secondGenWithItsIndex;
 
-	GenesPairInGenotype(GenInGenotype firstGenWithItsIndex, GenInGenotype secondGenWithItsIndex);
+	GenesPairInGenotype(GeneInGenotype firstGenWithItsIndex, GeneInGenotype secondGenWithItsIndex);
 	GenesPairInGenotype(int firstIndexInGenotype, int firstGenValue, int secondIndexInGenotype, int secondGenValue);
 
 	unsigned int calculateHash() override;
@@ -35,6 +35,8 @@ class GenesFrequenciesLookup
 	static const int INITIAL_FREQUENCY = 0;
 
 	LookupStructure* genesFrequenciesMapping;
+	int countOfConsideredGenotypes;
+
 	bool isThereGenesPairRegistered(GenesPairInGenotype unionOfGens);
 	void initializeFrequencyWithNewPair(GenesPairInGenotype* pairToMap);
 	void updateFrequencyWithPair(GenesPairInGenotype pairToUpdateFrequency);
@@ -47,7 +49,9 @@ public:
 	GenesFrequenciesLookup();
 	~GenesFrequenciesLookup();
 
-	int getFrequencyOfSingleGenInGenotypes(GenInGenotype genAndItsIndex);
+	int getCountOfConsideredGenotypes();
+
+	int getFrequencyOfSingleGenInGenotypes(GeneInGenotype genAndItsIndex);
 	int getFrequencyOfGenesPairInGenotypes(GenesPairInGenotype unionOfGens);
 
 	void updateWithIndividual(P3Individual& recentlyAddedIndividual);
