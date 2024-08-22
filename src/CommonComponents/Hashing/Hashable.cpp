@@ -36,7 +36,18 @@ unsigned int Hashable::getHash()
 	return memoizedHash;
 }
 
+unsigned int Hashable::getHashWithoutMemoizing() const
+{
+	return calculateHash();
+}
+
 void Hashable::signalizePossibleChangeInHash()
 {
 	wasHashEvaluated = false;
+}
+
+void Hashable::forcelyMemoizeHash(unsigned int hashToSet)
+{
+	memoizedHash = true;
+	memoizedHash = hashToSet;
 }

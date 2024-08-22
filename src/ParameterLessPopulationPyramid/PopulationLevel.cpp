@@ -1,10 +1,5 @@
 #include "PopulationLevel.h"
 
-void PopulationLevel::deleteIndividualsFromPopulation()
-{
-	clearVectorOfPointers(population);
-}
-
 void PopulationLevel::updateClusterizationAndFrequencies(P3Individual* newIndividual)
 {
 	clearVectorOfPointers(*estimatedGenesClusters);
@@ -45,7 +40,7 @@ PopulationLevel::PopulationLevel(OptimazationCase& caseToOptimize):
 
 PopulationLevel::~PopulationLevel()
 {
-	deleteIndividualsFromPopulation();
+	clearVectorOfPointers(population);
 	clearVectorOfPointers(*estimatedGenesClusters);
 	delete estimatedGenesClusters;
 }

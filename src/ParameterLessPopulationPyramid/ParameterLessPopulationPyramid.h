@@ -5,9 +5,6 @@
 #include "P3Individual.h"
 #include "Pyramid.h"
 
-class ParameterLessPopulationPyramid;
-using P3 = ParameterLessPopulationPyramid;
-
 using IndividualsHashSet = std::unordered_set<P3Individual*, PointerBaseHasher<P3Individual>, PointerBaseHashablesComparator<P3Individual>>;
 
 class ParameterLessPopulationPyramid: public GeneticOptimizer
@@ -15,11 +12,11 @@ class ParameterLessPopulationPyramid: public GeneticOptimizer
 	GreedyHillClimber* commonGreedyOptimizer;
 	Individual* theBestIndividual;
 	Pyramid* populationPyramid;
-	IndividualsHashSet* allDistinctIndividualsSet;
+	IndividualsHashSet* allDistinctIndividualsSet;		// stotred elements not to delete
 
 	bool isInitialized;
 
-	void decideAboutUpadingPyramidWithIndividual(P3Individual& potentiallyDistinctIndividual, int potentialPyramidLevelToUpdate);
+	void decideOnAddingIndividualToPyramid(P3Individual& potentiallyDistinctIndividual, int potentialPyramidLevelToUpdate);
 	void tryToImproveSolutionWithCluster(GeneIndexCluster& clusterOfChange, P3Individual& solution, PopulationLevel& population);
 
 public:
@@ -36,3 +33,5 @@ public:
 	Individual* peekTheBestIndividual() override;
 	Individual* copyTheBestIndividual() override;
 };
+
+using P3 = ParameterLessPopulationPyramid;

@@ -92,8 +92,8 @@ double EntropyBasedInitializer::calculateEntropy(GeneIndexCluster& leaf)
 
 double EntropyBasedInitializer::calculateEntropy(ClustersPair pairOfLeaves)
 {
-    GeneIndexCluster& firstLeaf = (GeneIndexCluster&)pairOfLeaves.firstCluster;
-    GeneIndexCluster& secondLeaf = (GeneIndexCluster&)pairOfLeaves.secondCluser;
+    GeneIndexCluster& firstLeaf = (GeneIndexCluster&)pairOfLeaves.first();
+    GeneIndexCluster& secondLeaf = (GeneIndexCluster&)pairOfLeaves.second();
 
     int firstLeafAssociatedDimension = firstLeaf.getAssociatedIndex();
     int secondLeafAssociatedDimension = secondLeaf.getAssociatedIndex();
@@ -114,8 +114,8 @@ double EntropyBasedInitializer::calculateEntropy(ClustersPair pairOfLeaves)
 
 double EntropyBasedInitializer::calculateDistanceBetweenTwoClusterLeaves(ClustersPair clusterLeaves)
 {
-    GeneIndexCluster& Ci = (GeneIndexCluster&)clusterLeaves.firstCluster;
-    GeneIndexCluster& Cj = (GeneIndexCluster&)clusterLeaves.secondCluser;
+    GeneIndexCluster& Ci = (GeneIndexCluster&)clusterLeaves.first();
+    GeneIndexCluster& Cj = (GeneIndexCluster&)clusterLeaves.second();
 
     ClustersPair CiCj(Ci, Cj);
 

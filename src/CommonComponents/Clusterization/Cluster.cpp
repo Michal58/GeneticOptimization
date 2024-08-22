@@ -4,6 +4,8 @@ Cluster::Cluster(int associatedIndexInDistances):
 	Hashable(false),
 	associatedDistinctNumber(associatedIndexInDistances) {}
 
+Cluster::~Cluster() {}
+
 int Cluster::getAssociatedDistincNumber() const
 {
 	return associatedDistinctNumber;
@@ -19,7 +21,7 @@ bool Cluster::isSingletonCluster()
 	return cardinality() == 1;
 }
 
-unsigned int Cluster::calculateHash()
+unsigned int Cluster::calculateHash() const
 {
 	std::hash<int> hasher;
 	return hasher(associatedDistinctNumber);

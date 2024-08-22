@@ -10,6 +10,10 @@ bool GeneInGenotype::operator==(const GeneInGenotype& other) const
 		&& this->indexInGenotype == other.indexInGenotype;
 }
 
+GenesPairInGenotype::GenesPairInGenotype() :
+	firstGenWithItsIndex(GeneInGenotype::INVALID_INDEX, GeneInGenotype::ANY_VALUE),
+	secondGenWithItsIndex(GeneInGenotype::INVALID_INDEX, GeneInGenotype::ANY_VALUE) {}
+
 GenesPairInGenotype::GenesPairInGenotype(GeneInGenotype firstGenWithItsIndex, GeneInGenotype secondGenWithItsIndex):
 	Hashable(false),
 	firstGenWithItsIndex(firstGenWithItsIndex),
@@ -32,7 +36,7 @@ bool GenesPairInGenotype::equals(const Hashable& other) const
 		&& this->secondGenWithItsIndex == otherGenesPair.secondGenWithItsIndex;
 }
 
-unsigned int GenesPairInGenotype::calculateHash()
+unsigned int GenesPairInGenotype::calculateHash() const
 {
 	std::vector<int> valuesToHash = 
 	{

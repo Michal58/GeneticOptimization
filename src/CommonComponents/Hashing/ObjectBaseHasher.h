@@ -8,7 +8,7 @@ public:
 
 	ObjectBaseHasher();
 
-	unsigned int  operator()(const T& hashableObj) const;
+	unsigned int operator()(const T& hashableObj) const;
 	bool operator()(const T& firstHashableObj, const T& secondHashableObj) const;
 };
 
@@ -26,7 +26,7 @@ inline ObjectBaseHasher<T>::ObjectBaseHasher()
 template<typename T>
 inline unsigned int ObjectBaseHasher<T>::operator()(const T& hashableObj) const
 {
-	return hashableObj.getHash();
+	return hashableObj.getHashWithoutMemoizing();
 }
 
 template<typename T>

@@ -7,6 +7,9 @@
 
 struct GeneInGenotype
 {
+	static const int INVALID_INDEX = -1;
+	static const int ANY_VALUE = -1;
+
 	int indexInGenotype;
 	int genValue;
 
@@ -21,10 +24,11 @@ struct GenesPairInGenotype: public Hashable
 	GeneInGenotype firstGenWithItsIndex;
 	GeneInGenotype secondGenWithItsIndex;
 
+	GenesPairInGenotype();
 	GenesPairInGenotype(GeneInGenotype firstGenWithItsIndex, GeneInGenotype secondGenWithItsIndex);
 	GenesPairInGenotype(int firstIndexInGenotype, int firstGenValue, int secondIndexInGenotype, int secondGenValue);
 
-	unsigned int calculateHash() override;
+	unsigned int calculateHash() const override;
 	bool equals(const Hashable& other) const override;
 };
 

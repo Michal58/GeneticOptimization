@@ -7,13 +7,13 @@ bool MinHeapBasedSelector::isClusterRemoved(Cluster& toCheckIfIsRemoved)
 
 bool MinHeapBasedSelector::isAnyOfTheClustersRemoved(ClustersPair pair)
 {
-	return isClusterRemoved(pair.firstCluster) || isClusterRemoved(pair.secondCluser);
+	return isClusterRemoved(pair.first()) || isClusterRemoved(pair.second());
 }
 
 void MinHeapBasedSelector::markClustersAsRemoved(ClustersPair pair)
 {
-	removedClusters.insert(&pair.firstCluster);
-	removedClusters.insert(&pair.secondCluser);
+	removedClusters.insert(&pair.first());
+	removedClusters.insert(&pair.second());
 }
 
 DistancesLookup& MinHeapBasedSelector::getAssociatedLookup()
@@ -34,8 +34,8 @@ void MinHeapBasedSelector::selectClustersForMerging(Cluster*& firstSelectedClust
 		minHeapOfPairs.pop();
 	ClustersPair clustersWithTheSmallestDistanceToEachOther = minHeapOfPairs.top().getPair();
 	markClustersAsRemoved(clustersWithTheSmallestDistanceToEachOther);
-	firstSelectedClusterContainer = &clustersWithTheSmallestDistanceToEachOther.firstCluster;
-	secondSelectedClusterContainer = &clustersWithTheSmallestDistanceToEachOther.secondCluser;
+	firstSelectedClusterContainer = &clustersWithTheSmallestDistanceToEachOther.first();
+	secondSelectedClusterContainer = &clustersWithTheSmallestDistanceToEachOther.second();
 }
 
 void MinHeapBasedSelector::updateWithNewCluster(Cluster* newCluster)
@@ -49,7 +49,7 @@ void MinHeapBasedSelector::updateWithNewCluster(Cluster* newCluster)
 
 HeapNodeOfClusterPair::HeapNodeOfClusterPair(ClustersPair associatedPair, MinHeapBasedSelector& associatedSelector):
 	associatedPair(associatedPair),
-	associatedSelector(associatedSelector) {}
+	associatedSelector(&associatedSelector) {}
 
 ClustersPair HeapNodeOfClusterPair::getPair() const
 {
@@ -58,7 +58,12 @@ ClustersPair HeapNodeOfClusterPair::getPair() const
 
 double HeapNodeOfClusterPair::getPairDistance()
 {
-	return associatedSelector.getAssociatedLookup().getDistance(associatedPair);
+	return associatedSelector->getAssociatedLookup().getDistance(associatedPair);
+}
+
+bool HeapNodeOfClusterPair::operator==(const HeapNodeOfClusterPair& other) const
+{
+	return associatedPair.equals(other.associatedPair);
 }
 
 bool ComparatorOfClustersPair::operator()(HeapNodeOfClusterPair firstNode, HeapNodeOfClusterPair secondNode)

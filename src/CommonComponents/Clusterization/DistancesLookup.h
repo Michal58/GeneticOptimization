@@ -10,14 +10,19 @@
 
 class InitializerOfDistancesLookup;
 
-struct ClustersPair: public Hashable
+class ClustersPair: public Hashable
 {
-	Cluster& firstCluster;
-	Cluster& secondCluser;
+	Cluster* firstCluster;
+	Cluster* secondCluster;
 
+public:
+
+	ClustersPair();
 	ClustersPair(Cluster& firstCluster, Cluster& secondCluster);
 
-	unsigned int calculateHash() override;
+	Cluster& first();
+	Cluster& second();
+	unsigned int calculateHash() const override;
 	bool equals(const Hashable& other) const override;
 };
 
@@ -45,7 +50,7 @@ public:
 	double getDistance(ClustersPair pair);
 	Cluster* replaceClustersByMergedClusterAndReturnIt(Cluster& firstToMerge, Cluster& secondToMerge);
 	ClustersSet& shareAllSingleClusters();
-	void putIntoContainerPairsAssociatedWithCluster(std::vector<ClustersPair> container, Cluster* clusterToAssociate);
+	void putIntoContainerPairsAssociatedWithCluster(std::vector<ClustersPair>& container, Cluster* clusterToAssociate);
 	std::vector<ClustersPair> getKeysOfMap();
 	int allClustersCardinality();
 };

@@ -1,6 +1,6 @@
 #include "P3Individual.h"
 
-unsigned int P3Individual::calculateHash()
+unsigned int P3Individual::calculateHash() const
 {
 	return Hashable::calculateHashOfVectorOfElementaryTypes<int>(*genotype);
 }
@@ -26,7 +26,7 @@ bool P3Individual::operator==(const P3Individual& other) const
 
 void P3Individual::greedilyOptimize()
 {
-	greedilyOptimize(GreedyHillClimber(*this, true, GreedyHillClimber::CONFIRMATION));
+	greedilyOptimize(GreedyHillClimber(*this, true, GreedyHillClimber::TURN_OFF_CONFIRMATION));
 }
 
 void P3Individual::greedilyOptimize(GreedyHillClimber& hillClimberToUse)
@@ -37,6 +37,8 @@ void P3Individual::greedilyOptimize(GreedyHillClimber& hillClimberToUse)
 
 ResultOfCrossover* P3Individual::crossover(Individual& donorOfGens, ParametersOfCrossover& crossoverParameters)
 {
+	registerChangesInGenotype();
+
 	ClusterBaseCrossoverParameters& actualParameters = (ClusterBaseCrossoverParameters&)crossoverParameters;
 	GeneIndexCluster& crossoverCluster=actualParameters.crossoverCluster;
 
@@ -45,7 +47,7 @@ ResultOfCrossover* P3Individual::crossover(Individual& donorOfGens, ParametersOf
 
 	for (int indexOfChange : crossoverCluster.shareIndicies())
 	{
-		previousGenesContainer->push_back((*genotype)[indexOfChange]);
+		previousGenesContainer->push_back(genotype->at(indexOfChange));
 		genotype->at(indexOfChange) = donorOfGens.getGenAt(indexOfChange);
 	}
 
@@ -62,14 +64,16 @@ Randomizer& P3Individual::getDefaultRandomizer()
 	return *Mt19937Randomizer::getSingletonInstance();
 }
 
-void P3Individual::revertChanges(GeneIndexCluster& clusterOfChange, std::vector<int>* previousGenes, double previousFitness)
+void P3Individual::revertChanges(GeneIndexCluster& clusterOfChange, std::vector<int>* previousGenes, double previousFitness, unsigned int previousHash)
 {
+	registerChangesInGenotype();
 	std::vector<int>::iterator iteratorOfPreviousGenes = previousGenes->begin();
 	for (int indexOfChange : clusterOfChange.shareIndicies())
 	{
 		genotype->at(indexOfChange) = *iteratorOfPreviousGenes;
 		iteratorOfPreviousGenes++;
 	}
+	forcelyMemoizeHash(previousHash);
 	forcelyMemoizeFitness(previousFitness);
 }
 

@@ -7,12 +7,14 @@ class MinHeapBasedSelector;
 class HeapNodeOfClusterPair
 {
 	ClustersPair associatedPair;
-	MinHeapBasedSelector& associatedSelector;
+	MinHeapBasedSelector* associatedSelector;
 
 public:
+
 	HeapNodeOfClusterPair(ClustersPair associatedPair, MinHeapBasedSelector& associatedSelector);
 	ClustersPair getPair() const;
 	double getPairDistance();
+	bool operator==(const HeapNodeOfClusterPair& other) const;
 };
 
 class ComparatorOfClustersPair

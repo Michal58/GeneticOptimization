@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <vector>
 
 class Hashable
 {
@@ -16,6 +18,7 @@ class Hashable
 	void memoizeHash(int calculatedHash);
 
 public:
+
 	Hashable(bool shoudHashBeMemoized);
 	Hashable();
 
@@ -24,12 +27,14 @@ public:
 	template<typename T>
 	static unsigned int calculateHashOfVectorOfElementaryTypes(const std::vector<T>& vectorOfValues);
 
-	virtual unsigned int calculateHash() = 0;
+	virtual unsigned int calculateHash() const = 0;
 
 	unsigned int getHash();
+	unsigned int getHashWithoutMemoizing() const;
 	virtual bool equals(const Hashable& other) const = 0;
 
 	void signalizePossibleChangeInHash();
+	void forcelyMemoizeHash(unsigned int hashToSet);
 };
 
 // place for template methods implementations
@@ -38,10 +43,10 @@ template<typename T>
 inline unsigned int Hashable::calculateHashOfVectorOfElementaryTypes(const std::vector<T>& vectorOfValues)
 {
 	std::hash<T> hashingFunction;
-	unsigned int accumulatedHash = hashingFunction(vectorOfValues->at(0));
-	for (int i = 1; i < vectorOfValues->size(); i++)
+	unsigned int accumulatedHash = hashingFunction(vectorOfValues.at(0));
+	for (int i = 1; i < vectorOfValues.size(); i++)
 	{
-		unsigned int partialHash = hashingFunction(vectorOfValues->at(i));
+		unsigned int partialHash = hashingFunction(vectorOfValues.at(i));
 		accumulatedHash = combineHashes(accumulatedHash, partialHash);
 	}
 

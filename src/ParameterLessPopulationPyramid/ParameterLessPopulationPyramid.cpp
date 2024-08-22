@@ -1,13 +1,13 @@
 #include "ParameterLessPopulationPyramid.h"
 
 
-void ParameterLessPopulationPyramid::decideAboutUpadingPyramidWithIndividual(P3Individual& potentiallyDistinctIndividual, int potentialPyramidLevelToUpdate)
+void ParameterLessPopulationPyramid::decideOnAddingIndividualToPyramid(P3Individual& potentiallyDistinctIndividual, int potentialPyramidLevelToUpdate)
 {
     bool isIndividualDistinct = this->isIndividualDistinct(potentiallyDistinctIndividual);
     if (isIndividualDistinct)
     {
         P3Individual* actualIndividualToAdd = new P3Individual(potentiallyDistinctIndividual);
-        populationPyramid->getOrCreateNextLevelAt(potentialPyramidLevelToUpdate).addIndividual(actualIndividualToAdd);
+        populationPyramid->addIndividualAndOptionallyCreateLevelAtDepth(actualIndividualToAdd, potentialPyramidLevelToUpdate);
         allDistinctIndividualsSet->insert(actualIndividualToAdd);
     }
 }
@@ -22,6 +22,7 @@ void ParameterLessPopulationPyramid::tryToImproveSolutionWithCluster(GeneIndexCl
         ClusterBaseCrossoverParameters parameters(clusterOfChange);
 
         double startingFitness = solution.evaluateFitness();
+        unsigned int startingHash = solution.getHash();
 
         PreviousGenes* resultOfCrossoverMadeInPlace = (PreviousGenes*)solution.crossover(randomIndividualFromPopulation, parameters);
 
@@ -29,7 +30,7 @@ void ParameterLessPopulationPyramid::tryToImproveSolutionWithCluster(GeneIndexCl
         didSolutionDecreased = fitnessAfterChanges < startingFitness;
 
         if (didSolutionDecreased)
-            solution.revertChanges(clusterOfChange, resultOfCrossoverMadeInPlace->previousGenes, startingFitness);
+            solution.revertChanges(clusterOfChange, resultOfCrossoverMadeInPlace->previousGenes, startingFitness, startingHash);
 
         delete resultOfCrossoverMadeInPlace->previousGenes;
         delete resultOfCrossoverMadeInPlace;
@@ -62,18 +63,14 @@ bool ParameterLessPopulationPyramid::isIndividualDistinct(P3Individual& possible
 void ParameterLessPopulationPyramid::mixSolutionWithPopulation(P3Individual& solution, PopulationLevel& population)
 {
     for (Cluster* clusterOfChange : population.shareClusters())
-    {
-        bool didSolutionDecreased = true;
-        std::vector<int> shuffledPopulationIndicies = population.getShuffledIndiciesOfIndividualsInPopulation();
         tryToImproveSolutionWithCluster(*(GeneIndexCluster*)clusterOfChange, solution, population);
-    }
 }
 
 void ParameterLessPopulationPyramid::reset()
 {
     theBestIndividual = nullptr;
-    populationPyramid = new Pyramid;
-    commonGreedyOptimizer = new GreedyHillClimber(caseInstance, true, GreedyHillClimber::CONFIRMATION);
+    populationPyramid = new Pyramid(caseInstance);
+    commonGreedyOptimizer = new GreedyHillClimber(caseInstance, true, GreedyHillClimber::TURN_OFF_CONFIRMATION);
     allDistinctIndividualsSet = new IndividualsHashSet;
 
     isInitialized = true;
@@ -88,23 +85,21 @@ void ParameterLessPopulationPyramid::runIteration()
 {
     P3Individual currentSolutionIndividual(caseInstance);
     currentSolutionIndividual.greedilyOptimize(*commonGreedyOptimizer);
-    decideAboutUpadingPyramidWithIndividual(currentSolutionIndividual, 0);
+    decideOnAddingIndividualToPyramid(currentSolutionIndividual, 0);
     for (int iPyramidDepth = 0; populationPyramid->hasLevelAt(iPyramidDepth); iPyramidDepth++)
     {
         double startingFitness = currentSolutionIndividual.evaluateFitness();
         mixSolutionWithPopulation(currentSolutionIndividual, populationPyramid->getLevel(iPyramidDepth));
         bool hasFitnessImproved = currentSolutionIndividual.evaluateFitness() > startingFitness;
         if (hasFitnessImproved)
-            decideAboutUpadingPyramidWithIndividual(currentSolutionIndividual, iPyramidDepth + 1);
+            decideOnAddingIndividualToPyramid(currentSolutionIndividual, iPyramidDepth + 1);
     }
-    if (theBestIndividual == nullptr)
-        theBestIndividual = new P3Individual(currentSolutionIndividual);
-    if (currentSolutionIndividual.evaluateFitness() > currentSolutionIndividual.evaluateFitness())
+
+    if (theBestIndividual == nullptr || currentSolutionIndividual.evaluateFitness() > currentSolutionIndividual.evaluateFitness())
     {
         delete theBestIndividual;
         theBestIndividual = new P3Individual(currentSolutionIndividual);
     }
-    
 }
 
 Individual* ParameterLessPopulationPyramid::peekTheBestIndividual()

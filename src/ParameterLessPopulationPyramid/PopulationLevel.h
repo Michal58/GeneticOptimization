@@ -25,7 +25,6 @@ class PopulationLevel
 
 	std::vector<Cluster*>* estimatedGenesClusters;
 
-	void deleteIndividualsFromPopulation();
 	void updateClusterizationAndFrequencies(P3Individual* newIndividual);
 	void orderClustersWithSizeAscending();
 	void removeClusterWithCardinalityOfGenotype();

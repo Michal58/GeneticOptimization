@@ -10,6 +10,7 @@ class Cluster: public Hashable
 public:
 
 	Cluster(int associatedDistinctNumber);
+	virtual ~Cluster();
 
 	int getAssociatedDistincNumber() const;
 	bool operator==(const Cluster& other) const;
@@ -21,7 +22,7 @@ public:
 	virtual Cluster* getCopy() const = 0;
 	virtual int cardinality() = 0;
 
-	unsigned int calculateHash() override;
+	unsigned int calculateHash() const override;
 	bool equals(const Hashable& other) const override;
 };
 

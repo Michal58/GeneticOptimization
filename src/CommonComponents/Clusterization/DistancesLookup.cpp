@@ -1,16 +1,30 @@
 #include "DistancesLookup.h"
 
+ClustersPair::ClustersPair():
+	firstCluster(nullptr),
+	secondCluster(nullptr) {}
+
 ClustersPair::ClustersPair(Cluster& firstCluster, Cluster& secondCluster):
 	Hashable(false),
-	firstCluster(firstCluster),
-	secondCluser(secondCluser) {}
+	firstCluster(&firstCluster),
+	secondCluster(&secondCluster) {}
 
-unsigned int ClustersPair::calculateHash()
+Cluster& ClustersPair::first()
+{
+	return *firstCluster;
+}
+
+Cluster& ClustersPair::second()
+{
+	return *secondCluster;
+}
+
+unsigned int ClustersPair::calculateHash() const
 {
 	std::vector<int> clustersDistinctNumbers =
 	{
-		firstCluster.getAssociatedDistincNumber(),
-		secondCluser.getAssociatedDistincNumber()
+		firstCluster->getAssociatedDistincNumber(),
+		secondCluster->getAssociatedDistincNumber()
 	};
 
 	return Hashable::calculateHashOfVectorOfElementaryTypes<int>(clustersDistinctNumbers);
@@ -23,8 +37,8 @@ bool ClustersPair::equals(const Hashable& other) const
 
 	ClustersPair& otherClusterPair = (ClustersPair&)other;
 
-	return (this->firstCluster == otherClusterPair.firstCluster && this->secondCluser == otherClusterPair.secondCluser)
-		|| (this->firstCluster == otherClusterPair.secondCluser && this->secondCluser == otherClusterPair.firstCluster);
+	return (this->firstCluster == otherClusterPair.firstCluster && this->secondCluster == otherClusterPair.secondCluster)
+		|| (this->firstCluster == otherClusterPair.secondCluster && this->secondCluster == otherClusterPair.firstCluster);
 }
 
 bool DistancesLookup::isThereClusterPair(ClustersPair pairToCheck)
@@ -85,7 +99,7 @@ double DistancesLookup::getDistance(Cluster& first, Cluster& second)
 
 double DistancesLookup::getDistance(ClustersPair pair)
 {
-	return getDistance(pair.firstCluster,pair.secondCluser);
+	return getDistance(pair.first(), pair.second());
 }
 
 Cluster* DistancesLookup::replaceClustersByMergedClusterAndReturnIt(Cluster& firstMerge, Cluster& secondMerge)
@@ -104,7 +118,7 @@ ClustersSet& DistancesLookup::shareAllSingleClusters()
 	return allSingleClusters;
 }
 
-void DistancesLookup::putIntoContainerPairsAssociatedWithCluster(std::vector<ClustersPair> container, Cluster* clusterToAssociate)
+void DistancesLookup::putIntoContainerPairsAssociatedWithCluster(std::vector<ClustersPair>& container, Cluster* clusterToAssociate)
 {
 	for (Cluster* kCluster : allSingleClusters)
 	{
@@ -134,7 +148,7 @@ ClustersSet& InitializerOfDistancesLookup::accessSingleClusters(DistancesLookup&
 	return lookupToAccess.allSingleClusters;
 }
 
-DistancesLookup::ClusterPairsToDistances& InitializerOfDistancesLookup::accessDistancesMap(DistancesLookup& lookupToAccess)
+ClusterPairsToDistances& InitializerOfDistancesLookup::accessDistancesMap(DistancesLookup& lookupToAccess)
 {
 	return lookupToAccess.distancesMap;
 }

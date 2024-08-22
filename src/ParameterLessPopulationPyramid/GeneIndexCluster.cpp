@@ -1,5 +1,7 @@
 #include "GeneIndexCluster.h"
 
+int GeneIndexCluster::nextDistinctNumber = GeneIndexCluster::INITIAL_DISTINCT_NUMBER;
+
 GeneIndexCluster::GeneIndexCluster(int associatedDistinctNumber):
     Cluster(associatedDistinctNumber) {}
 
@@ -37,7 +39,7 @@ int GeneIndexCluster::cardinality()
 
 Cluster* GeneIndexCluster::getMergedCluster(const Cluster& toMerge, int distinctNumberForMerged) const
 {
-    if (!isInstanceOf<GeneIndexCluster>(toMerge))
+    if (!isInstanceOf<GeneIndexCluster>(&toMerge))
         throw std::runtime_error(INVALID_MERGE_CLUSTER_ERROR);
 
     GeneIndexCluster* mergedCluster = new GeneIndexCluster(distinctNumberForMerged);

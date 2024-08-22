@@ -29,12 +29,12 @@ public:
 	P3Individual(OptimazationCase& evaluator);
 	P3Individual(const P3Individual& other);
 	bool operator==(const P3Individual& other) const;
-	unsigned int calculateHash() override;
+	unsigned int calculateHash() const override;
 	bool equals(const Hashable& other) const override;
 	void greedilyOptimize();
 	void greedilyOptimize(GreedyHillClimber& hillClimberToUse);
 	ResultOfCrossover* crossover(Individual& donorOfGens, ParametersOfCrossover& crossoverParameters) override;
 	Individual* clone() override;
 	Randomizer& getDefaultRandomizer() override;
-	void revertChanges(GeneIndexCluster& clusterOfChange, std::vector<int>* previousGenes, double previousFitness);
+	void revertChanges(GeneIndexCluster& clusterOfChange, std::vector<int>* previousGenes, double previousFitness, unsigned int prevoiusHash);
 };

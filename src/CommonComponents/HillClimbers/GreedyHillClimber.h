@@ -11,7 +11,7 @@ class GreedyHillClimber: public GeneticOptimizer
 	static const int DEFULT_COUNT_OF_SAME_INDIVIDUAL_OPTIMAZATIONS = 1;
 
 	Individual* theBestIndividual;
-	int countOfSameIndividualOptimazations;
+	int countOfTheSameIndividualOptimazations;
 
 	Individual* individualToOptimize;		// not to delete
 	bool shouldMixOrderOfOptimazation;
@@ -23,22 +23,23 @@ class GreedyHillClimber: public GeneticOptimizer
 	void randomlyMixOptimazationOrder();
 	void updateTheBestGenAndFitnessIfNewGenIsImprovement(int genIndex, int newGen, int& theBestGen, double& theBestFitness);
 	void optimizeGenAt(int index);
-	void updateTheBestIndividualIfNeeded();
+	void tryToUpdateTheBestIndividual();
 
 public:
 
-	static enum GeneralOptimizerTurnOff {
-		CONFIRMATION
+	static enum GeneticOptimizerTurnOff 
+	{
+		TURN_OFF_CONFIRMATION
 	};
 
-	GreedyHillClimber(OptimazationCase& caseToInitialize,bool shouldMixOrderOfOptimazation, GeneralOptimizerTurnOff turnOffConfirmation);
-	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation, GeneralOptimizerTurnOff turnOffConfirmation);
+	GreedyHillClimber(OptimazationCase& caseToInitialize,bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation);
+	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation);
 	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation);
-	GreedyHillClimber(Individual& initialIndividual, bool shouldMixOrderOfOptimazation, int countOfSameIndividualOptimazations);
+	GreedyHillClimber(Individual& initialIndividual, bool shouldMixOrderOfOptimazation, int countOfTheSameIndividualOptimazations);
 	~GreedyHillClimber();
 
 	void optimizeIndividual();
-	void setIndividualToOptimize(Individual& individualToOptimize, bool shouldUpdateTheBestIndividualInWholeOptimazationProcess);
+	void setIndividualToOptimize(Individual& individualToOptimize, bool shouldTryToUpdateTheBestIndividual);
 
 	void reset() override;
 	bool isReadyToSearch() override;
