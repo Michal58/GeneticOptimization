@@ -10,9 +10,9 @@ void GreedyHillClimber::randomlyMixOptimazationOrder()
 	std::shuffle(orderOfOptimazation.begin(), orderOfOptimazation.end(), *Mt19937Randomizer::getSingletonInstance());
 }
 
-void GreedyHillClimber::updateTheBestGenAndFitnessIfNewGenIsImprovement(int genIndex, int newGen, int& theBestGen, double& theBestFitness)
+void GreedyHillClimber::applyMutationAndUpdateTheBestGeneAndFitnessIfNewGeneIsImprovement(int genIndex, int newGen, int& theBestGen, double& theBestFitness)
 {
-	individualToOptimize->mutateGen(genIndex, newGen);
+	individualToOptimize->mutateGene(genIndex, newGen);
 	double newFitness = individualToOptimize->evaluateFitness();
 
 	bool isNewGenImprovement = newFitness > theBestFitness;
@@ -23,21 +23,21 @@ void GreedyHillClimber::updateTheBestGenAndFitnessIfNewGenIsImprovement(int genI
 	}
 }
 
-void GreedyHillClimber::optimizeGenAt(int index)
+void GreedyHillClimber::optimizeGeneAt(int index)
 {
-	std::unique_ptr<DomainIterator> genDomain = individualToOptimize->getDomain(index);
+	std::unique_ptr<DomainIterator> geneDomain = individualToOptimize->getDomain(index);
 
-	int originalGen= individualToOptimize->getGenAt(index);
-	int theBestGen = originalGen;
+	int originalGene= individualToOptimize->getGeneAt(index);
+	int theBestGen = originalGene;
 	double theBestFitness = individualToOptimize->evaluateFitness();
 
-	while (genDomain->hasNext())
+	while (geneDomain->hasNext())
 	{
-		int possibleGenImporvement = genDomain->next();
-		updateTheBestGenAndFitnessIfNewGenIsImprovement(index, possibleGenImporvement, theBestGen, theBestFitness);
+		int possibleGeneImporvement = geneDomain->next();
+		applyMutationAndUpdateTheBestGeneAndFitnessIfNewGeneIsImprovement(index, possibleGeneImporvement, theBestGen, theBestFitness);
 	}
 
-	individualToOptimize->mutateGen(index, theBestGen);
+	individualToOptimize->mutateGene(index, theBestGen);
 	individualToOptimize->forcelyMemoizeFitness(theBestFitness);
 }
 
@@ -96,7 +96,7 @@ void GreedyHillClimber::optimizeIndividual()
 		randomlyMixOptimazationOrder();
 
 	for (int indexAssociatedWithGenToOptimize : orderOfOptimazation)
-		optimizeGenAt(indexAssociatedWithGenToOptimize);
+		optimizeGeneAt(indexAssociatedWithGenToOptimize);
 }
 
 void GreedyHillClimber::setIndividualToOptimize(Individual& individualToOptimize, bool shouldTryToUpdateTheBestIndividual)

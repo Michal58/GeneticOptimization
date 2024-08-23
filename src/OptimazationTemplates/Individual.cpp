@@ -56,7 +56,7 @@ int Individual::peekGen(int index)
 	return (*genotype)[index];
 }
 
-void Individual::mutateGen(int index, int newGen)
+void Individual::mutateGene(int index, int newGen)
 {
 	registerChangesInGenotype();
 	setGenAt(index, newGen);
@@ -82,11 +82,11 @@ void Individual::fillAllGensRandomly(Randomizer& randomGenerator)
 	{
 		int diceRoll = randomGenerator.randInRange(evaluator.getCountOfDomainValues(iDomain));
 		int genToFill = evaluator.getDomain(iDomain)->next(diceRoll);
-		mutateGen(iDomain, genToFill);
+		mutateGene(iDomain, genToFill);
 	}
 }
 
-int Individual::getGenAt(int index)
+int Individual::getGeneAt(int index)
 {
 	return genotype->at(index);
 }

@@ -4,13 +4,15 @@
 #include "RunArrangement/RunArrangement.h"
 #include "RunArrangement/ClassicalRunArrangementManager.h"
 #include "RunArrangement/GreedyOptimazationRunArrangementManager.h"
+#include "RunArrangement/P3RunArrangementManager.h"
 
 typedef ManagerOfRunArrangement* (*arrangementMangerCreator) (OptimazationCase&);
 
 const arrangementMangerCreator ARRANGEMENT_CONSTRUCTORS[] = 
 {
 	& ClassicalRunArrangementManager::createInstance,
-	& GreedyOptimazationRunArrangementManager::createInstance
+	& GreedyOptimazationRunArrangementManager::createInstance,
+	& P3RunArrangementManager::createInstance
 };
 
 struct OptimazationResult 

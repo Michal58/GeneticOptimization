@@ -45,7 +45,7 @@ public:
 	virtual void moveContentTo(Individual& other);
 
 	virtual int peekGen(int index);
-	virtual void mutateGen(int index, int newGen);
+	virtual void mutateGene(int index, int newGen);
 
 	virtual int getSizeOfGenotype();
 	virtual int getCountOfValuesAt(int index);
@@ -55,7 +55,7 @@ public:
 	virtual void fillAllGensRandomly();
 	virtual void fillAllGensRandomly(Randomizer& randomGenerator);
 
-	virtual int getGenAt(int index);
+	virtual int getGeneAt(int index);
 
 	bool isFitnessEvaluated();
 	void forcelyMemoizeFitness(double newFitness);

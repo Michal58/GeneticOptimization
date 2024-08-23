@@ -79,7 +79,7 @@ PairOfIndividuals ClassicalIndividual::crossover(ClassicalIndividual* const part
 void ClassicalIndividual::randomlyMutateGen(int genIndex)
 {
 	int diceRoll= Mt19937Randomizer::getSingletonInstance()->randInRange(evaluator.getCountOfDomainValues(genIndex));
-	mutateGen(genIndex, diceRoll);
+	mutateGene(genIndex, diceRoll);
 }
 
 ResultOfCrossover* ClassicalIndividual::crossover(Individual& donorOfGens, ParametersOfCrossover& crossoverParameters)

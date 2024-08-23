@@ -44,11 +44,12 @@ ResultOfCrossover* P3Individual::crossover(Individual& donorOfGens, ParametersOf
 
 	std::vector<int>* previousGenesContainer = nullptr;
 	previousGenesContainer = new std::vector<int>;
+	previousGenesContainer->reserve(crossoverCluster.cardinality());
 
 	for (int indexOfChange : crossoverCluster.shareIndicies())
 	{
 		previousGenesContainer->push_back(genotype->at(indexOfChange));
-		genotype->at(indexOfChange) = donorOfGens.getGenAt(indexOfChange);
+		genotype->at(indexOfChange) = donorOfGens.getGeneAt(indexOfChange);
 	}
 
 	return (ResultOfCrossover*) new PreviousGenes(previousGenesContainer);

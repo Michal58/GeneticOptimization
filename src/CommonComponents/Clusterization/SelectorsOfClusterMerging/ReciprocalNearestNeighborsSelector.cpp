@@ -1,5 +1,10 @@
 #include "ReciprocalNearestNeighborsSelector.h"
 
+Cluster* ReciprocalNearestNeighborsSelector::getLastButOneSeriesElement()
+{
+	return *(seriesOfClustersWithDescendingDistances.end() - LAST_BUT_ONE_OFFSET);
+}
+
 Cluster* ReciprocalNearestNeighborsSelector::findClusterInSingleClustersWhichMakesTheClosestDistanceWithLastElementOfSeries()
 {
 	Cluster* lastElementOfSeries = seriesOfClustersWithDescendingDistances.back();
@@ -7,7 +12,7 @@ Cluster* ReciprocalNearestNeighborsSelector::findClusterInSingleClustersWhichMak
 	double theBestDistance = DBL_MAX;
 	Cluster* theBestFoundCluster = nullptr;
 
-	for (Cluster* singleCurrentCluster : *singleClusters)
+	for (Cluster* singleCurrentCluster : *singleClustersOutOfSeries)
 	{
 		double currentDistance = associatedLookup->getDistance(ClustersPair(*lastElementOfSeries, *singleCurrentCluster));
 		if (currentDistance > theBestDistance)
@@ -20,46 +25,63 @@ Cluster* ReciprocalNearestNeighborsSelector::findClusterInSingleClustersWhichMak
 	return theBestFoundCluster;
 }
 
+void ReciprocalNearestNeighborsSelector::moveToSeriesClusterFromSingleClusters(Cluster* toExpandSeries)
+{
+	seriesOfClustersWithDescendingDistances.push_back(toExpandSeries);
+	singleClustersOutOfSeries->erase(toExpandSeries);
+}
+
+bool ReciprocalNearestNeighborsSelector::findIfAddingClusterFromSingleClusterKeepsDescendingOrderOfSeries(Cluster* theBestClusterFoundInSingleClusters)
+{
+	Cluster* lastSeriesElement = seriesOfClustersWithDescendingDistances.back();
+	Cluster* lastButOneSeriesElement = getLastButOneSeriesElement();
+
+	double distanceOfTheBestFoundElementInSingleClusters = associatedLookup->getDistance(*lastSeriesElement, *theBestClusterFoundInSingleClusters);
+	double distanceOfCurrentLastTwoElementsInSeries = associatedLookup->getDistance(*lastSeriesElement, *lastButOneSeriesElement);
+
+	return distanceOfTheBestFoundElementInSingleClusters > distanceOfCurrentLastTwoElementsInSeries;
+}
+
 ReciprocalNearestNeighborsSelector::ReciprocalNearestNeighborsSelector()
 {
-	singleClusters = nullptr;
+	singleClustersOutOfSeries = nullptr;
 }
 
 ReciprocalNearestNeighborsSelector::~ReciprocalNearestNeighborsSelector()
 {
-	delete singleClusters;
+	delete singleClustersOutOfSeries;
 }
 
 void ReciprocalNearestNeighborsSelector::setAssociatedLookup(DistancesLookup& associatedLookup)
 {
 	SelectorOfClustersMerging::setAssociatedLookup(associatedLookup);
-	singleClusters = new ClustersSet(associatedLookup.shareAllSingleClusters());
+	singleClustersOutOfSeries = new ClustersSet(associatedLookup.shareAllSingleClusters());
 }
 
-void ReciprocalNearestNeighborsSelector::selectClustersForMerging(Cluster*& fitsSelectedClusterContainer, Cluster*& secondSelectedClusterContainer)
+void ReciprocalNearestNeighborsSelector::selectClustersForMerging(Cluster*& firstSelectedClusterContainer, Cluster*& secondSelectedClusterContainer)
 {
-	fitsSelectedClusterContainer = seriesOfClustersWithDescendingDistances.back();
-
-	Cluster* arbitrarilySelectedCluster = *singleClusters->begin();
-	seriesOfClustersWithDescendingDistances.push_back(arbitrarilySelectedCluster);
-	Cluster* theBestClusterFoundInSingleClusters = findClusterInSingleClustersWhichMakesTheClosestDistanceWithLastElementOfSeries();
-
-	Cluster* lastSeriesElement = seriesOfClustersWithDescendingDistances.back();
-	Cluster* lastButOneSeriesElement = *(seriesOfClustersWithDescendingDistances.end() - LAST_BUT_ONE_OFFSET);
-
-	double distanceOfTheBestFoundElementInSingleClusters = associatedLookup->getDistance(*lastSeriesElement, *theBestClusterFoundInSingleClusters);
-	double distanceOfCurrentLastTwoElementsInSeries = associatedLookup->getDistance(*lastSeriesElement, *lastButOneSeriesElement);
-
-	if (distanceOfTheBestFoundElementInSingleClusters > distanceOfCurrentLastTwoElementsInSeries)
+	if (seriesOfClustersWithDescendingDistances.empty())
 	{
-		secondSelectedClusterContainer = theBestClusterFoundInSingleClusters;
-		singleClusters->erase(theBestClusterFoundInSingleClusters);
+		Cluster* arbitrarilySelectedCluster = *singleClustersOutOfSeries->begin();
+		moveToSeriesClusterFromSingleClusters(arbitrarilySelectedCluster);
 	}
-	else
+
+	bool isTheBestFoundSingleClusterImporvement = true;
+
+	while (isTheBestFoundSingleClusterImporvement && !singleClustersOutOfSeries->empty());
 	{
-		secondSelectedClusterContainer = lastButOneSeriesElement;
-		seriesOfClustersWithDescendingDistances.pop_back();
+		Cluster* theBestClusterFoundInSingleClusters = findClusterInSingleClustersWhichMakesTheClosestDistanceWithLastElementOfSeries();
+
+		if (seriesOfClustersWithDescendingDistances.size() > 1)
+			isTheBestFoundSingleClusterImporvement = findIfAddingClusterFromSingleClusterKeepsDescendingOrderOfSeries(theBestClusterFoundInSingleClusters);
+		
+		if (isTheBestFoundSingleClusterImporvement)
+			moveToSeriesClusterFromSingleClusters(theBestClusterFoundInSingleClusters);
 	}
+
+	firstSelectedClusterContainer = getLastButOneSeriesElement();
+	secondSelectedClusterContainer = seriesOfClustersWithDescendingDistances.back();
+	seriesOfClustersWithDescendingDistances.pop_back();
 }
 
 void ReciprocalNearestNeighborsSelector::updateWithNewCluster(Cluster* newCluster)

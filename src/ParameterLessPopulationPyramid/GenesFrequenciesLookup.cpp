@@ -11,13 +11,13 @@ bool GeneInGenotype::operator==(const GeneInGenotype& other) const
 }
 
 GenesPairInGenotype::GenesPairInGenotype() :
-	firstGenWithItsIndex(GeneInGenotype::INVALID_INDEX, GeneInGenotype::ANY_VALUE),
-	secondGenWithItsIndex(GeneInGenotype::INVALID_INDEX, GeneInGenotype::ANY_VALUE) {}
+	firstGeneWithItsIndex(GeneInGenotype::INVALID_INDEX, GeneInGenotype::ANY_VALUE),
+	secondGeneWithItsIndex(GeneInGenotype::INVALID_INDEX, GeneInGenotype::ANY_VALUE) {}
 
-GenesPairInGenotype::GenesPairInGenotype(GeneInGenotype firstGenWithItsIndex, GeneInGenotype secondGenWithItsIndex):
+GenesPairInGenotype::GenesPairInGenotype(GeneInGenotype firstGeneWithItsIndex, GeneInGenotype secondGeneWithItsIndex):
 	Hashable(false),
-	firstGenWithItsIndex(firstGenWithItsIndex),
-	secondGenWithItsIndex(secondGenWithItsIndex) {}
+	firstGeneWithItsIndex(firstGeneWithItsIndex),
+	secondGeneWithItsIndex(secondGeneWithItsIndex) {}
 
 GenesPairInGenotype::GenesPairInGenotype(int firstIndexInGenotype, int firstGenValue, int secondIndexInGenotype, int secondGenValue):
 	GenesPairInGenotype
@@ -32,18 +32,18 @@ bool GenesPairInGenotype::equals(const Hashable& other) const
 		return false;
 
 	GenesPairInGenotype& otherGenesPair = (GenesPairInGenotype&)other;
-	return this->firstGenWithItsIndex == otherGenesPair.firstGenWithItsIndex
-		&& this->secondGenWithItsIndex == otherGenesPair.secondGenWithItsIndex;
+	return this->firstGeneWithItsIndex == otherGenesPair.firstGeneWithItsIndex
+		&& this->secondGeneWithItsIndex == otherGenesPair.secondGeneWithItsIndex;
 }
 
 unsigned int GenesPairInGenotype::calculateHash() const
 {
 	std::vector<int> valuesToHash = 
 	{
-		firstGenWithItsIndex.genValue,
-		secondGenWithItsIndex.genValue,
-		firstGenWithItsIndex.indexInGenotype,
-		secondGenWithItsIndex.indexInGenotype
+		firstGeneWithItsIndex.genValue,
+		secondGeneWithItsIndex.genValue,
+		firstGeneWithItsIndex.indexInGenotype,
+		secondGeneWithItsIndex.indexInGenotype
 	};
 
 	unsigned int hashValue = Hashable::calculateHashOfVectorOfElementaryTypes(valuesToHash);
@@ -68,11 +68,11 @@ void GenesFrequenciesLookup::updateFrequencyWithPair(GenesPairInGenotype pairToU
 
 void GenesFrequenciesLookup::updateFrequenciesKeepingFirstIndexOfMappingPairNotBiggerThanSecond(GenesPairInGenotype mappingPair, P3Individual& recentlyAddedIndividual)
 {
-	int startingIndex = mappingPair.firstGenWithItsIndex.indexInGenotype;
+	int startingIndex = mappingPair.firstGeneWithItsIndex.indexInGenotype;
 	for (int iGenForPairCreationIndex = startingIndex; iGenForPairCreationIndex < recentlyAddedIndividual.getSizeOfGenotype(); iGenForPairCreationIndex++)
 	{
-		mappingPair.secondGenWithItsIndex.indexInGenotype = iGenForPairCreationIndex;
-		mappingPair.secondGenWithItsIndex.genValue = recentlyAddedIndividual.getGenAt(iGenForPairCreationIndex);
+		mappingPair.secondGeneWithItsIndex.indexInGenotype = iGenForPairCreationIndex;
+		mappingPair.secondGeneWithItsIndex.genValue = recentlyAddedIndividual.getGeneAt(iGenForPairCreationIndex);
 
 		if (!isThereGenesPairRegistered(mappingPair))
 			initializeFrequencyWithNewPair(new GenesPairInGenotype(mappingPair));
@@ -123,7 +123,7 @@ void GenesFrequenciesLookup::updateWithIndividual(P3Individual& recentlyAddedInd
 {
 	for (int iMainGenIndex = 0; iMainGenIndex < recentlyAddedIndividual.getSizeOfGenotype(); iMainGenIndex++)
 	{
-		int valueOfMainGen = recentlyAddedIndividual.getGenAt(iMainGenIndex);
+		int valueOfMainGen = recentlyAddedIndividual.getGeneAt(iMainGenIndex);
 		GenesPairInGenotype initialPair(iMainGenIndex, valueOfMainGen, iMainGenIndex, valueOfMainGen);
 		updateFrequenciesKeepingFirstIndexOfMappingPairNotBiggerThanSecond(initialPair, recentlyAddedIndividual);
 	}

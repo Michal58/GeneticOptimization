@@ -84,6 +84,8 @@ bool ParameterLessPopulationPyramid::isReadyToSearch()
 void ParameterLessPopulationPyramid::runIteration()
 {
     P3Individual currentSolutionIndividual(caseInstance);
+    currentSolutionIndividual.fillAllGensRandomly();
+
     currentSolutionIndividual.greedilyOptimize(*commonGreedyOptimizer);
     decideOnAddingIndividualToPyramid(currentSolutionIndividual, 0);
     for (int iPyramidDepth = 0; populationPyramid->hasLevelAt(iPyramidDepth); iPyramidDepth++)

@@ -7,7 +7,6 @@ void PopulationLevel::updateClusterizationAndFrequencies(P3Individual* newIndivi
 	EntropyBasedInitializer clustersAndDistancesInitializer(caseToOptimize, populationGenesFrequenciesLookup);
 	DistancesLookup clustersDistancesLookup(clustersAndDistancesInitializer);
 	MinHeapBasedSelector correctnessMergeSelector;
-	correctnessMergeSelector.setAssociatedLookup(clustersDistancesLookup);
 	ClusterizationPerformer clusterizationExecutor(correctnessMergeSelector);
 	conductClusterization(clusterizationExecutor, clustersDistancesLookup);
 }
@@ -35,7 +34,7 @@ void PopulationLevel::conductClusterization(ClusterizationPerformer& clusterizat
 PopulationLevel::PopulationLevel(OptimazationCase& caseToOptimize):
 	caseToOptimize(caseToOptimize)
 {
-	estimatedGenesClusters = nullptr;
+	estimatedGenesClusters = new std::vector<Cluster*>;
 }
 
 PopulationLevel::~PopulationLevel()

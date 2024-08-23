@@ -51,3 +51,8 @@ void Hashable::forcelyMemoizeHash(unsigned int hashToSet)
 	memoizedHash = true;
 	memoizedHash = hashToSet;
 }
+
+bool Hashable::isHashMemoized()
+{
+	return wasHashEvaluated;
+}

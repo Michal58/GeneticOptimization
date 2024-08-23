@@ -21,8 +21,8 @@ class GreedyHillClimber: public GeneticOptimizer
 
 	void setDefalutOrderOfOptimazation();
 	void randomlyMixOptimazationOrder();
-	void updateTheBestGenAndFitnessIfNewGenIsImprovement(int genIndex, int newGen, int& theBestGen, double& theBestFitness);
-	void optimizeGenAt(int index);
+	void applyMutationAndUpdateTheBestGeneAndFitnessIfNewGeneIsImprovement(int geneIndex, int newGene, int& theBestGene, double& theBestFitness);
+	void optimizeGeneAt(int index);
 	void tryToUpdateTheBestIndividual();
 
 public:

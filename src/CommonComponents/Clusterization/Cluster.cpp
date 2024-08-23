@@ -29,5 +29,8 @@ unsigned int Cluster::calculateHash() const
 
 bool Cluster::equals(const Hashable& other) const
 {
-	return isInstanceOf<Cluster>(&other);
+	if (!isInstanceOf<Cluster>(&other))
+		return false;
+	Cluster& otherAsCluster = (Cluster&)other;
+	return getAssociatedDistincNumber() == otherAsCluster.getAssociatedDistincNumber();
 }

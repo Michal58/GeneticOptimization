@@ -21,11 +21,11 @@ struct GenesPairInGenotype: public Hashable
 {
 	static const int COUNT_OF_BASE_ELEMENTS = 4;
 
-	GeneInGenotype firstGenWithItsIndex;
-	GeneInGenotype secondGenWithItsIndex;
+	GeneInGenotype firstGeneWithItsIndex;
+	GeneInGenotype secondGeneWithItsIndex;
 
 	GenesPairInGenotype();
-	GenesPairInGenotype(GeneInGenotype firstGenWithItsIndex, GeneInGenotype secondGenWithItsIndex);
+	GenesPairInGenotype(GeneInGenotype firstGeneWithItsIndex, GeneInGenotype secondGeneWithItsIndex);
 	GenesPairInGenotype(int firstIndexInGenotype, int firstGenValue, int secondIndexInGenotype, int secondGenValue);
 
 	unsigned int calculateHash() const override;

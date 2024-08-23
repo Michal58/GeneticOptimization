@@ -5,10 +5,13 @@ class ReciprocalNearestNeighborsSelector: public SelectorOfClustersMerging
 {
 	static const int LAST_BUT_ONE_OFFSET = 2;
 
-	ClustersSet* singleClusters;
+	ClustersSet* singleClustersOutOfSeries;
 	std::vector<Cluster*> seriesOfClustersWithDescendingDistances;
 
+	Cluster* getLastButOneSeriesElement();
 	Cluster* findClusterInSingleClustersWhichMakesTheClosestDistanceWithLastElementOfSeries();
+	void moveToSeriesClusterFromSingleClusters(Cluster* toExpandSeries);
+	bool findIfAddingClusterFromSingleClusterKeepsDescendingOrderOfSeries(Cluster* theBestClusterFoundInSingleClusters);
 
 public:
 

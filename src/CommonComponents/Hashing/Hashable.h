@@ -35,6 +35,7 @@ public:
 
 	void signalizePossibleChangeInHash();
 	void forcelyMemoizeHash(unsigned int hashToSet);
+	bool isHashMemoized();
 };
 
 // place for template methods implementations

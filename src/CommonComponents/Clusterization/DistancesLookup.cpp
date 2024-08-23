@@ -131,7 +131,8 @@ void DistancesLookup::putIntoContainerPairsAssociatedWithCluster(std::vector<Clu
 
 std::vector<ClustersPair> DistancesLookup::getKeysOfMap()
 {
-	std::vector<ClustersPair> keys(distancesMap.size());
+	std::vector<ClustersPair> keys;
+	keys.reserve(distancesMap.size());
 	for (std::pair<const ClustersPair,double> distancesPair : distancesMap)
 		keys.push_back(distancesPair.first);
 	

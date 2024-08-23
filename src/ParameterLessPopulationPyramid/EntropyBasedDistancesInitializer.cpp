@@ -24,7 +24,8 @@ void EntropyBasedInitializer::initializeMapOfDistances(DistancesLookup& distance
 {
     ClustersSet& setOfAllClusters = InitializerOfDistancesLookup::accessSingleClusters(distancesToInitialize);
 
-    std::vector<Cluster*> sequenceOfClusters(setOfAllClusters.size());
+    std::vector<Cluster*> sequenceOfClusters;
+    sequenceOfClusters.reserve(setOfAllClusters.size());
     for (Cluster* singleCluster : setOfAllClusters)
         sequenceOfClusters.push_back(singleCluster);
 
@@ -45,8 +46,8 @@ std::vector<GenesPairInGenotype> EntropyBasedInitializer::getCartesianProductOfG
     int firstLeafAssociatedDimension = firstLeafAsGeneRepresentation.getAssociatedIndex();
     int secondLeafAssociatedDimension = secondLeafAsGeneRepresentation.getAssociatedIndex();
 
-    std::vector<GenesPairInGenotype> cartesianProduct(
-        caseToSolve.getCountOfDomainValues(firstLeafAssociatedDimension)
+    std::vector<GenesPairInGenotype> cartesianProduct;
+    cartesianProduct.reserve(caseToSolve.getCountOfDomainValues(firstLeafAssociatedDimension)
         * caseToSolve.getCountOfDomainValues(secondLeafAssociatedDimension));
 
     std::unique_ptr<DomainIterator> firstDomain = caseToSolve.getDomain(firstLeafAssociatedDimension);
