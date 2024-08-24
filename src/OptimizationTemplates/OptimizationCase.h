@@ -17,7 +17,7 @@ protected:
 
 	void initializeStandardIterationProtocolIfNeeded();
 	void throwExceptionIfTriedToDoAnActionOnFinishedIterator();
-	void prepeareNonConstMethodOfStandardIteratorProtocolToRun();
+	void prepareNonConstMethodOfStandardIteratorProtocolToRun();
 
 public:
 
@@ -67,7 +67,7 @@ public:
 
 class FinishedIterator: public DomainIterator {
 
-	void causeInitializationAsStarndardIterator();
+	void causeInitializationAsStandardIterator();
 
 public:
 

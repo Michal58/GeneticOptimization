@@ -104,7 +104,7 @@ bool Individual::isFitnessEvaluated()
 	return wasEvaluated;
 }
 
-void Individual::forcelyMemoizeFitness(double newFitness)
+void Individual::forcefullyMemoizeFitness(double newFitness)
 {
 	memoizeFitness(newFitness);
 }
@@ -114,7 +114,7 @@ std::vector<int>* Individual::copyGenotype()
 	return new std::vector<int>(*genotype);
 }
 
-OptimizationCase& Individual::getOptimazationCase()
+OptimizationCase& Individual::getOptimizationCase()
 {
 	return evaluator;
 }

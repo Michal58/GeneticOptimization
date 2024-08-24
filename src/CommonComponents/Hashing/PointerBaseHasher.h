@@ -19,7 +19,7 @@ template <typename T>
 using PointerBaseHashablesComparator = PointerBaseHasher<T>;
 
 
-// methods implmentation
+// methods implementation
 
 template<typename T>
 inline PointerBaseHasher<T>::PointerBaseHasher()

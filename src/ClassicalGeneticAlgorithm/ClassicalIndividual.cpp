@@ -35,7 +35,7 @@ void ClassicalIndividual::tryToMutateAllGensRandomly(double chanceForGenMutation
 	}
 }
 
-ClassicalIndividual** ClassicalIndividual::generateMutatntsOverGen(int genIndex, int& containerOfsizeOfArrayLength)
+ClassicalIndividual** ClassicalIndividual::generateMutantsOverGen(int genIndex, int& containerOfSizeOfArrayLength)
 {
 	int valuesRange = evaluator.getCountOfDomainValues(genIndex);
 	ClassicalIndividual** mutantsArray = new ClassicalIndividual * [valuesRange - 1];
@@ -50,7 +50,7 @@ ClassicalIndividual** ClassicalIndividual::generateMutatntsOverGen(int genIndex,
 		mutantsArray[i - 1]->genotype->at(genIndex) = i;
 	}
 
-	containerOfsizeOfArrayLength = valuesRange - 1;
+	containerOfSizeOfArrayLength = valuesRange - 1;
 
 	return mutantsArray;
 }

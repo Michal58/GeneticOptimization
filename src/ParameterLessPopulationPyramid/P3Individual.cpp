@@ -47,7 +47,7 @@ ResultOfCrossover* P3Individual::crossover(Individual& donorOfGens, ParametersOf
 	previousGenesContainer->reserve(crossoverCluster.cardinality());
 
 	bool isThereChangeInGenotype = false;
-	for (int indexOfChange : crossoverCluster.shareIndicies())
+	for (int indexOfChange : crossoverCluster.shareIndices())
 	{
 		previousGenesContainer->push_back(genotype->at(indexOfChange));
 		int donatedGene = donorOfGens.getGeneAt(indexOfChange);
@@ -73,13 +73,13 @@ void P3Individual::revertChanges(GeneIndexCluster& clusterOfChange, std::vector<
 {
 	registerChangesInGenotype();
 	std::vector<int>::iterator iteratorOfPreviousGenes = previousGenes->begin();
-	for (int indexOfChange : clusterOfChange.shareIndicies())
+	for (int indexOfChange : clusterOfChange.shareIndices())
 	{
 		genotype->at(indexOfChange) = *iteratorOfPreviousGenes;
 		iteratorOfPreviousGenes++;
 	}
-	forcelyMemoizeHash(previousHash);
-	forcelyMemoizeFitness(previousFitness);
+	forcefullyMemoizeHash(previousHash);
+	forcefullyMemoizeFitness(previousFitness);
 }
 
 bool P3Individual::equals(const Hashable& other) const

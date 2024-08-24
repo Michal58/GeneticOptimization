@@ -29,8 +29,8 @@ void EntropyBasedInitializer::initializeMapOfDistances(DistancesLookup& distance
     for (Cluster* singleCluster : setOfAllClusters)
         sequenceOfClusters.push_back(singleCluster);
 
-    for (int iFirstClusetInPair = 0; iFirstClusetInPair < sequenceOfClusters.size(); iFirstClusetInPair++)
-        fillDistancesWithFirstIndexOfSequenceAlwaysSmallerThanSecond(iFirstClusetInPair, sequenceOfClusters, distancesToInitialize);
+    for (int iFirstClusterInPair = 0; iFirstClusterInPair < sequenceOfClusters.size(); iFirstClusterInPair++)
+        fillDistancesWithFirstIndexOfSequenceAlwaysSmallerThanSecond(iFirstClusterInPair, sequenceOfClusters, distancesToInitialize);
     
 }
 
@@ -70,9 +70,9 @@ std::vector<GenesPairInGenotype> EntropyBasedInitializer::getCartesianProductOfG
 
 void EntropyBasedInitializer::updateEntropySum(double& currentSum, int frequencyOfElement)
 {
-    double probabilityOfOccurance = getProbabilityFromSetOfGenesFrequency(frequencyOfElement);
-    double nextUpdate = probabilityOfOccurance == static_cast<double>(0) ?
-        0 : probabilityOfOccurance * std::log(probabilityOfOccurance);
+    double probabilityOfOccurrence = getProbabilityFromSetOfGenesFrequency(frequencyOfElement);
+    double nextUpdate = probabilityOfOccurrence == static_cast<double>(0) ?
+        0 : probabilityOfOccurrence * std::log(probabilityOfOccurrence);
     currentSum += nextUpdate;
 }
 

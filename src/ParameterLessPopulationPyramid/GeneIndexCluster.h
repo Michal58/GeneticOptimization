@@ -8,7 +8,7 @@ class GeneIndexCluster: public Cluster
 	const static int INITIAL_DISTINCT_NUMBER = 0;
 	static int nextDistinctNumber;
 
-	std::vector<int> representedIndicies;
+	std::vector<int> representedIndices;
 
 	GeneIndexCluster(int associatedDistinctNumber);
 
@@ -24,6 +24,6 @@ public:
 	int proposeDistinctNumber() const override;
 	int getAssociatedIndex();
 
-	std::vector<int>& shareIndicies();
+	std::vector<int>& shareIndices();
 };
 

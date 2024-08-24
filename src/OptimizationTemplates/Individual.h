@@ -58,8 +58,8 @@ public:
 	virtual int getGeneAt(int index);
 
 	bool isFitnessEvaluated();
-	void forcelyMemoizeFitness(double newFitness);
+	void forcefullyMemoizeFitness(double newFitness);
 
 	std::vector<int>* copyGenotype();
-	OptimizationCase& getOptimazationCase();
+	OptimizationCase& getOptimizationCase();
 };

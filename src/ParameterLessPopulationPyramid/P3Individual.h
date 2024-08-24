@@ -37,5 +37,5 @@ public:
 	ResultOfCrossover* crossover(Individual& donorOfGens, ParametersOfCrossover& crossoverParameters) override;
 	Individual* clone() override;
 	Randomizer& getDefaultRandomizer() override;
-	void revertChanges(GeneIndexCluster& clusterOfChange, std::vector<int>* previousGenes, double previousFitness, unsigned int prevoiusHash);
+	void revertChanges(GeneIndexCluster& clusterOfChange, std::vector<int>* previousGenes, double previousFitness, unsigned int previousHash);
 };

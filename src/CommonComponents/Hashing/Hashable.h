@@ -8,7 +8,7 @@ class Hashable
 	static const unsigned int HASH_LEFT_SHIFT_DEGREE = 6;
 	static const unsigned int HASH_RIGHT_SHIFT_DEGREE = 2;
 
-	static const bool DEFUALT_MEMOIZATION_DECISION = true;
+	static const bool DEFAULT_MEMOIZATION_DECISION = true;
 
 	bool shouldHashBeMemoized;
 
@@ -19,7 +19,7 @@ class Hashable
 
 public:
 
-	Hashable(bool shoudHashBeMemoized);
+	Hashable(bool shouldHashBeMemoized);
 	Hashable();
 
 	static unsigned int combineHashes(unsigned int accumulatedHash, unsigned int partialHash);
@@ -34,7 +34,7 @@ public:
 	virtual bool equals(const Hashable& other) const = 0;
 
 	void signalizePossibleChangeInHash();
-	void forcelyMemoizeHash(unsigned int hashToSet);
+	void forcefullyMemoizeHash(unsigned int hashToSet);
 	bool isHashMemoized();
 };
 

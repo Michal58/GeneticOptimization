@@ -1,17 +1,17 @@
 #include "GeneticAlgorithm.h"
 
-IterationCtirterium::IterationCtirterium(int maxIterationsCount)
+IterationCriterion::IterationCriterion(int maxIterationsCount)
 {
 	this->maxIterationsCount = maxIterationsCount;
 	countOfIterations = 0;
 }
 
-bool IterationCtirterium::isLimitReached()
+bool IterationCriterion::isLimitReached()
 {
 	return countOfIterations >= maxIterationsCount;
 }
 
-void IterationCtirterium::updateStance()
+void IterationCriterion::updateStance()
 {
 	countOfIterations++;
 }

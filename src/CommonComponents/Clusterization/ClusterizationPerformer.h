@@ -10,6 +10,6 @@ class ClusterizationPerformer
 public:
 
 	ClusterizationPerformer(SelectorOfClustersMerging& clustersToMergeSelector);
-	std::vector<Cluster*>* perfromClusterization(DistancesLookup& distances, bool removeClustersWithZeroDistances);
+	std::vector<Cluster*>* performClusterization(DistancesLookup& distances, bool removeClustersWithZeroDistances);
 };
 

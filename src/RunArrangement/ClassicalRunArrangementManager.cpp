@@ -3,9 +3,9 @@
 ClassicalRunArrangementManager::ClassicalRunArrangementManager(OptimizationCase& givenCaseToSolve):
 	ManagerOfRunArrangement(givenCaseToSolve) {}
 
-StopCriterium* ClassicalRunArrangementManager::createStopCriterium()
+StopCriterion* ClassicalRunArrangementManager::createStopCriterion()
 {
-	return new IterationCtirterium(ARRANGED_CLASSICAL_ITERATIONS_COUNT);
+	return new IterationCriterion(ARRANGED_CLASSICAL_ITERATIONS_COUNT);
 }
 
 GeneticOptimizer* ClassicalRunArrangementManager::createGeneticOptimizer()

@@ -6,7 +6,7 @@ Cluster::Cluster(int associatedIndexInDistances):
 
 Cluster::~Cluster() {}
 
-int Cluster::getAssociatedDistincNumber() const
+int Cluster::getAssociatedDistinctNumber() const
 {
 	return associatedDistinctNumber;
 }
@@ -32,5 +32,5 @@ bool Cluster::equals(const Hashable& other) const
 	if (!isInstanceOf<Cluster>(&other))
 		return false;
 	Cluster& otherAsCluster = (Cluster&)other;
-	return getAssociatedDistincNumber() == otherAsCluster.getAssociatedDistincNumber();
+	return getAssociatedDistinctNumber() == otherAsCluster.getAssociatedDistinctNumber();
 }

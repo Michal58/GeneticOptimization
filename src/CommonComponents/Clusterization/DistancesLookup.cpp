@@ -23,8 +23,8 @@ unsigned int ClustersPair::calculateHash() const
 {
 	std::vector<int> clustersDistinctNumbers =
 	{
-		firstCluster->getAssociatedDistincNumber(),
-		secondCluster->getAssociatedDistincNumber()
+		firstCluster->getAssociatedDistinctNumber(),
+		secondCluster->getAssociatedDistinctNumber()
 	};
 	std::sort(clustersDistinctNumbers.begin(), clustersDistinctNumbers.end());
 

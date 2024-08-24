@@ -15,7 +15,7 @@ public:
 	static ManagerOfRunArrangement* createInstance(OptimizationCase& givenCaseToSolve);
 	ClassicalRunArrangementManager(OptimizationCase& givenCaseToSolve);
 
-	StopCriterium* createStopCriterium() override;
+	StopCriterion* createStopCriterion() override;
 	GeneticOptimizer* createGeneticOptimizer() override;
 };
 

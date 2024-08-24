@@ -12,7 +12,7 @@ public:
 	Cluster(int associatedDistinctNumber);
 	virtual ~Cluster();
 
-	int getAssociatedDistincNumber() const;
+	int getAssociatedDistinctNumber() const;
 	bool operator==(const Cluster& other) const;
 	virtual bool isSingletonCluster();
 

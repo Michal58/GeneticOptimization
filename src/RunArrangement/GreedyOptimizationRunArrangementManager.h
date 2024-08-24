@@ -3,20 +3,20 @@
 #include "../ClassicalGeneticAlgorithm/GeneticAlgorithm.h"
 #include "../CommonComponents/HillClimbers/GreedyHillClimber.h"
 
-#define GREEDY_OPTIMAZATION_ITERATIONS_COUNT 2
-#define SAME_SOLUTION_OPTIMAZATION_COUNT 2
+#define GREEDY_OPTIMIZATION_ITERATIONS_COUNT 2
+#define SAME_SOLUTION_OPTIMIZATION_COUNT 2
 
-class GreedyOptimazationRunArrangementManager: public ManagerOfRunArrangement
+class GreedyOptimizationRunArrangementManager: public ManagerOfRunArrangement
 {
 	Individual* initialIndividual;
 
 public:
 
 	static ManagerOfRunArrangement* createInstance(OptimizationCase& givenCaseToSolve);
-	GreedyOptimazationRunArrangementManager(OptimizationCase& givenCaseToSolve);
-	~GreedyOptimazationRunArrangementManager();
+	GreedyOptimizationRunArrangementManager(OptimizationCase& givenCaseToSolve);
+	~GreedyOptimizationRunArrangementManager();
 
-	StopCriterium* createStopCriterium() override;
+	StopCriterion* createStopCriterion() override;
 	GeneticOptimizer* createGeneticOptimizer() override;
 };
 

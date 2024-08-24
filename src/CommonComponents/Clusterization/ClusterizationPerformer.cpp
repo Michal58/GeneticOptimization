@@ -3,7 +3,7 @@
 ClusterizationPerformer::ClusterizationPerformer(SelectorOfClustersMerging& clustersToMergeSelector):
     clustersToMergeSelector(clustersToMergeSelector) {}
 
-std::vector<Cluster*>* ClusterizationPerformer::perfromClusterization(DistancesLookup& distances, bool shouldDeleteClustersWithZeroDistances)
+std::vector<Cluster*>* ClusterizationPerformer::performClusterization(DistancesLookup& distances, bool shouldDeleteClustersWithZeroDistances)
 {
     std::vector<Cluster*>* allClusters = new std::vector<Cluster*>;
     std::vector<Cluster*> clustersToDelete;

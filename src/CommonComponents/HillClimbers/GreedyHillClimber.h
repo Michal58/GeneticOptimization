@@ -8,19 +8,19 @@
 
 class GreedyHillClimber: public GeneticOptimizer
 {
-	static const int DEFULT_COUNT_OF_SAME_INDIVIDUAL_OPTIMAZATIONS = 1;
+	static const int DEFAULT_COUNT_OF_SAME_INDIVIDUAL_OPTIMIZATIONS = 1;
 
 	Individual* theBestIndividual;
-	int countOfTheSameIndividualOptimazations;
+	int countOfTheSameIndividualOptimizations;
 
 	Individual* individualToOptimize;		// not to delete
-	bool shouldMixOrderOfOptimazation;
-	std::vector<int> orderOfOptimazation;
+	bool shouldMixOrderOfOptimization;
+	std::vector<int> orderOfOptimization;
 
 	bool isInitialized;
 
-	void setDefalutOrderOfOptimazation();
-	void randomlyMixOptimazationOrder();
+	void setDefaultOrderOfOptimization();
+	void randomlyMixOptimizationOrder();
 	void applyMutationAndUpdateTheBestGeneAndFitnessIfNewGeneIsImprovement(int geneIndex, int newGene, int& theBestGene, double& theBestFitness);
 	void optimizeGeneAt(int index);
 	void tryToUpdateTheBestIndividual();
@@ -32,10 +32,10 @@ public:
 		TURN_OFF_CONFIRMATION
 	};
 
-	GreedyHillClimber(OptimizationCase& caseToInitialize,bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation);
-	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation);
-	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation);
-	GreedyHillClimber(Individual& initialIndividual, bool shouldMixOrderOfOptimazation, int countOfTheSameIndividualOptimazations);
+	GreedyHillClimber(OptimizationCase& caseToInitialize,bool shouldMixOrderOfOptimization, GeneticOptimizerTurnOff turnOffConfirmation);
+	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimization, GeneticOptimizerTurnOff turnOffConfirmation);
+	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimization);
+	GreedyHillClimber(Individual& initialIndividual, bool shouldMixOrderOfOptimization, int countOfTheSameIndividualOptimizations);
 	~GreedyHillClimber();
 
 	void optimizeIndividual();

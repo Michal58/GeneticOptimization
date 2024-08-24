@@ -12,7 +12,7 @@ public:
 	static ManagerOfRunArrangement* createInstance(OptimizationCase& givenCaseToSolve);
 
 	P3RunArrangementManager(OptimizationCase& givenCaseToSolve);
-	StopCriterium* createStopCriterium() override;
+	StopCriterion* createStopCriterion() override;
 	GeneticOptimizer* createGeneticOptimizer() override;
 };
 

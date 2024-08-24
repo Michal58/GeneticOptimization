@@ -5,7 +5,7 @@ GeneticOptimizer::GeneticOptimizer(OptimizationCase& caseInstance):
 
 GeneticOptimizer::~GeneticOptimizer() {}
 
-void GeneticOptimizer::searchForTheBestSolution(StopCriterium& stopController)
+void GeneticOptimizer::searchForTheBestSolution(StopCriterion& stopController)
 {
 	if (!isReadyToSearch())
 		return;

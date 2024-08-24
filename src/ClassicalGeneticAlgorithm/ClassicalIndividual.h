@@ -12,7 +12,7 @@ class PairOfIndividuals:public ResultOfCrossover
 {
 public:
 
-	PairOfIndividuals(ClassicalIndividual* inividual1, ClassicalIndividual* individual2);
+	PairOfIndividuals(ClassicalIndividual* individual1, ClassicalIndividual* individual2);
 	PairOfIndividuals(const PairOfIndividuals& other);
 
 	//here's deliberately no destructor
@@ -41,7 +41,7 @@ public:
 
 	void tryToMutateAllGensRandomly(double chanceForGenMutation);
 
-	ClassicalIndividual** generateMutatntsOverGen(int genIndex, int& sizeOfArrayLengthContainer);
+	ClassicalIndividual** generateMutantsOverGen(int genIndex, int& sizeOfArrayLengthContainer);
 
 	void ClassicalIndividual::randomlyMutateGen(int genIndex);
 

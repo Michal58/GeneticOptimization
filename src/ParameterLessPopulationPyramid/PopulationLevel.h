@@ -6,7 +6,7 @@
 #include "P3Individual.h"
 #include "GenesFrequenciesLookup.h"
 #include "EntropyBasedDistancesInitializer.h"
-#define ERROR_IN_CLUSTERIZATION_PROCESS_ASSUMPTION "There's no cluster representing union of all singletion clusters"
+#define ERROR_IN_CLUSTERIZATION_PROCESS_ASSUMPTION "There's no cluster representing union of all singleton clusters"
 
 class ClusterSizeComparator
 {
@@ -36,7 +36,7 @@ public:
 	~PopulationLevel();
 	void addIndividual(P3Individual* newIndividual);
 	std::vector<Cluster*>& shareClusters();
-	std::vector<int> getShuffledIndiciesOfIndividualsInPopulation();
+	std::vector<int> getShuffledIndicesOfIndividualsInPopulation();
 	P3Individual* getSomeIndividual();
 	P3Individual& getIndividualFromIndex(int index);
 	int size();

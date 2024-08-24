@@ -7,7 +7,7 @@
 #define LOG_FORBIDDEN 0
 #define LOG_PERMISSION LOG_ALLOWED
 
-class StopCriterium
+class StopCriterion
 {
 public:
 
@@ -31,7 +31,7 @@ public:
 	virtual void reset() = 0;
 	virtual bool isReadyToSearch() = 0;
 	virtual void runIteration() = 0;
-	virtual void searchForTheBestSolution(StopCriterium& stopController);
+	virtual void searchForTheBestSolution(StopCriterion& stopController);
 	virtual Individual* peekTheBestIndividual() = 0;
 	virtual Individual* copyTheBestIndividual() = 0;
 };

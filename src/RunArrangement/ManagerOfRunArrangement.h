@@ -7,13 +7,13 @@ protected:
 	OptimizationCase& givenCaseToSolve;
 	RunArrangement* createdRunArrangement;
 
-	StopCriterium* arrangedStopCriterium;
+	StopCriterion* arrangedStopCriterion;
 	GeneticOptimizer* arrangedOptimizer;
 
 	void createRunArrangement();
-	void createRunArrangement(StopCriterium* arrangedStopCriterium, GeneticOptimizer* arrangedOptimizer);
+	void createRunArrangement(StopCriterion* arrangedStopCriterion, GeneticOptimizer* arrangedOptimizer);
 
-	virtual StopCriterium* createStopCriterium() = 0;
+	virtual StopCriterion* createStopCriterion() = 0;
 	virtual GeneticOptimizer* createGeneticOptimizer() = 0;
 
 public:

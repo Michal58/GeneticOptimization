@@ -8,9 +8,9 @@ ManagerOfRunArrangement* P3RunArrangementManager::createInstance(OptimizationCas
 P3RunArrangementManager::P3RunArrangementManager(OptimizationCase& givenCaseToSolve):
 	ManagerOfRunArrangement(givenCaseToSolve) {}
 
-StopCriterium* P3RunArrangementManager::createStopCriterium()
+StopCriterion* P3RunArrangementManager::createStopCriterion()
 {
-	return new IterationCtirterium(ARRANGED_P3_ITERATIONS_COUNT);
+	return new IterationCriterion(ARRANGED_P3_ITERATIONS_COUNT);
 }
 
 GeneticOptimizer* P3RunArrangementManager::createGeneticOptimizer()

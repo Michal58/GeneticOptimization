@@ -1,13 +1,13 @@
-#include "../OptimazationRun.h"
+#include "../OptimizationRun.h"
 
-OptimazationRun::OptimazationRun(OptimizationCase& givenCaseToSolve, GeneticOptimizer& givenOptimizerAsSolver, StopCriterium& givenCriteriumOfStop):
+OptimizationRun::OptimizationRun(OptimizationCase& givenCaseToSolve, GeneticOptimizer& givenOptimizerAsSolver, StopCriterion& givenCriterionOfStop):
     givenCaseToSolve(givenCaseToSolve),
-    arrangedRunSet(*createRunArrangement(givenOptimizerAsSolver, givenCriteriumOfStop))
+    arrangedRunSet(*createRunArrangement(givenOptimizerAsSolver, givenCriterionOfStop))
 {
     possiblyPassedManagerOfRunArrangement = nullptr;
 }
 
-OptimazationRun::OptimazationRun(OptimizationCase& givenCaseToSolve, RunArrangement& arrangedRunSet):
+OptimizationRun::OptimizationRun(OptimizationCase& givenCaseToSolve, RunArrangement& arrangedRunSet):
     givenCaseToSolve(givenCaseToSolve),
     arrangedRunSet(arrangedRunSet)
 {
@@ -15,7 +15,7 @@ OptimazationRun::OptimazationRun(OptimizationCase& givenCaseToSolve, RunArrangem
     possiblyPassedManagerOfRunArrangement = nullptr;
 }
 
-OptimazationRun::OptimazationRun(OptimizationCase& givenCaseToSolve, ManagerOfRunArrangement* arrangementManager): 
+OptimizationRun::OptimizationRun(OptimizationCase& givenCaseToSolve, ManagerOfRunArrangement* arrangementManager): 
     givenCaseToSolve(givenCaseToSolve),
     arrangedRunSet(arrangementManager->shareRunArrangement())
 {
@@ -23,29 +23,29 @@ OptimazationRun::OptimazationRun(OptimizationCase& givenCaseToSolve, ManagerOfRu
     possiblyPassedManagerOfRunArrangement = arrangementManager;
 }
 
-OptimazationRun::OptimazationRun(OptimizationCase& givenCaseToSolve, int indexOfArrangementConstructor) :
-    OptimazationRun(givenCaseToSolve, ARRANGEMENT_CONSTRUCTORS[indexOfArrangementConstructor](givenCaseToSolve)) {}
+OptimizationRun::OptimizationRun(OptimizationCase& givenCaseToSolve, int indexOfArrangementConstructor) :
+    OptimizationRun(givenCaseToSolve, ARRANGEMENT_CONSTRUCTORS[indexOfArrangementConstructor](givenCaseToSolve)) {}
 
-OptimazationRun::~OptimazationRun()
+OptimizationRun::~OptimizationRun()
 {
     delete possiblyPassedManagerOfRunArrangement;
     delete possiblyCreatedRunArrangement;
 }
 
-OptimizationResult OptimazationRun::findOptimizedSolution()
+OptimizationResult OptimizationRun::findOptimizedSolution()
 {
     GeneticOptimizer& proposedSolver = arrangedRunSet.proposedSolver;
-    StopCriterium& proposedCriteriumOfStop = arrangedRunSet.proposedCriteriumOfStop;
+    StopCriterion& proposedCriterionOfStop = arrangedRunSet.proposedCriterionOfStop;
 
     proposedSolver.reset();
-    proposedSolver.searchForTheBestSolution(proposedCriteriumOfStop);
+    proposedSolver.searchForTheBestSolution(proposedCriterionOfStop);
 
     Individual* solution = proposedSolver.peekTheBestIndividual();
     return OptimizationResult{ solution->evaluateFitness(),solution->copyGenotype() };
 }
 
-RunArrangement* OptimazationRun::createRunArrangement(GeneticOptimizer& givenOptimizerAsSolver, StopCriterium& givenCriteriumOfStop)
+RunArrangement* OptimizationRun::createRunArrangement(GeneticOptimizer& givenOptimizerAsSolver, StopCriterion& givenCriterionOfStop)
 {
-    this->possiblyCreatedRunArrangement = new RunArrangement(givenOptimizerAsSolver, givenCriteriumOfStop);
+    this->possiblyCreatedRunArrangement = new RunArrangement(givenOptimizerAsSolver, givenCriterionOfStop);
     return this->possiblyCreatedRunArrangement;
 }

@@ -5,17 +5,17 @@
 #include "../OptimizationTemplates/GeneticOptimizer.h"
 #include "ClassicalIndividual.h"
 
-#define GEN_OPTIMAZATION_CHANCE 0.001
+#define GENE_OPTIMIZATION_CHANCE 0.001
 
 
-class IterationCtirterium :public StopCriterium
+class IterationCriterion :public StopCriterion
 {
 	int maxIterationsCount;
 	int countOfIterations;
 
 public:
 
-	IterationCtirterium(int maxIterationsCount);
+	IterationCriterion(int maxIterationsCount);
 	bool isLimitReached();
 	void updateStance();
 };

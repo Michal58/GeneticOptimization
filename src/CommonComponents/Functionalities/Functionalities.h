@@ -21,8 +21,7 @@ bool isInstanceOf(const U& supposedDerivedClass);
 template <typename T, typename U>
 bool isThereElementIn(T set, U element);
 
-
-// defininitons of template functions - I dedcided it is a better solution than defining it in cpp file
+// definitions of template functions - I decided it is a better solution than defining it in .cpp file
 
 
 template<typename IterablePointers, typename PointerType>

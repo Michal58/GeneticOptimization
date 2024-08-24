@@ -9,12 +9,12 @@ void Hashable::memoizeHash(int calculatedHash)
 // combineHashes was sourced from Boost library
 // https://www.boost.org/LICENSE_1_0.txt
 
-Hashable::Hashable(bool shoudHashBeMemoized):
-	shouldHashBeMemoized(shoudHashBeMemoized),
+Hashable::Hashable(bool shouldHashBeMemoized):
+	shouldHashBeMemoized(shouldHashBeMemoized),
 	wasHashEvaluated(false) {}
 
 Hashable::Hashable():
-	Hashable(DEFUALT_MEMOIZATION_DECISION) {}
+	Hashable(DEFAULT_MEMOIZATION_DECISION) {}
 
 unsigned int Hashable::combineHashes(unsigned int accumulatedHash, unsigned int partialHash)
 {
@@ -46,7 +46,7 @@ void Hashable::signalizePossibleChangeInHash()
 	wasHashEvaluated = false;
 }
 
-void Hashable::forcelyMemoizeHash(unsigned int hashToSet)
+void Hashable::forcefullyMemoizeHash(unsigned int hashToSet)
 {
 	memoizedHash = true;
 	memoizedHash = hashToSet;

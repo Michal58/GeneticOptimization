@@ -2,14 +2,14 @@
 
 void ManagerOfRunArrangement::createRunArrangement()
 {
-	arrangedStopCriterium = createStopCriterium();
+	arrangedStopCriterion = createStopCriterion();
 	arrangedOptimizer = createGeneticOptimizer();
-	createdRunArrangement = new RunArrangement(*arrangedOptimizer, *arrangedStopCriterium);
+	createdRunArrangement = new RunArrangement(*arrangedOptimizer, *arrangedStopCriterion);
 }
 
-void ManagerOfRunArrangement::createRunArrangement(StopCriterium* arrangedStopCriterium, GeneticOptimizer* arrangedOptimizer)
+void ManagerOfRunArrangement::createRunArrangement(StopCriterion* arrangedStopCriterion, GeneticOptimizer* arrangedOptimizer)
 {
-	this->arrangedStopCriterium = arrangedStopCriterium;
+	this->arrangedStopCriterion = arrangedStopCriterion;
 	this->arrangedOptimizer = arrangedOptimizer;
 }
 
@@ -17,14 +17,14 @@ ManagerOfRunArrangement::ManagerOfRunArrangement(OptimizationCase& givenCaseToSo
 	givenCaseToSolve(givenCaseToSolve)
 {
 	this->createdRunArrangement = nullptr;
-	this->arrangedStopCriterium = nullptr;
+	this->arrangedStopCriterion = nullptr;
 	this->arrangedOptimizer = nullptr;
 }
 
 ManagerOfRunArrangement::~ManagerOfRunArrangement()
 {
 	delete createdRunArrangement;
-	delete arrangedStopCriterium;
+	delete arrangedStopCriterion;
 	delete arrangedOptimizer;
 }
 

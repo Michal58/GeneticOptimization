@@ -1,5 +1,5 @@
 #include "RunArrangement.h"
 
-RunArrangement::RunArrangement(GeneticOptimizer& proposedSolver, StopCriterium& proposedCriteriumOfStop):
+RunArrangement::RunArrangement(GeneticOptimizer& proposedSolver, StopCriterion& proposedCriterionOfStop):
 	proposedSolver(proposedSolver),
-	proposedCriteriumOfStop(proposedCriteriumOfStop) {}
+	proposedCriterionOfStop(proposedCriterionOfStop) {}

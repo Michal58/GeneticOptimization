@@ -26,7 +26,7 @@ void PopulationLevel::removeClusterWithCardinalityOfGenotype()
 
 void PopulationLevel::conductClusterization(ClusterizationPerformer& clusterizationExecutor, DistancesLookup& clustersDistancesLookup)
 {
-	estimatedGenesClusters = clusterizationExecutor.perfromClusterization(clustersDistancesLookup, true);
+	estimatedGenesClusters = clusterizationExecutor.performClusterization(clustersDistancesLookup, true);
 	orderClustersWithSizeAscending();
 	removeClusterWithCardinalityOfGenotype();
 }
@@ -55,11 +55,11 @@ std::vector<Cluster*>& PopulationLevel::shareClusters()
 	return *estimatedGenesClusters;
 }
 
-std::vector<int> PopulationLevel::getShuffledIndiciesOfIndividualsInPopulation()
+std::vector<int> PopulationLevel::getShuffledIndicesOfIndividualsInPopulation()
 {
-	std::vector<int> indiciesToShuffle(population.size());
-	std::iota(indiciesToShuffle.begin(), indiciesToShuffle.end(), 0);
-	return indiciesToShuffle;
+	std::vector<int> indicesToShuffle(population.size());
+	std::iota(indicesToShuffle.begin(), indicesToShuffle.end(), 0);
+	return indicesToShuffle;
 }
 
 P3Individual* PopulationLevel::getSomeIndividual()

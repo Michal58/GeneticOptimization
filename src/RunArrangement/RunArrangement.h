@@ -5,7 +5,7 @@
 struct RunArrangement {
 
 	GeneticOptimizer& proposedSolver;
-	StopCriterium& proposedCriteriumOfStop;
+	StopCriterion& proposedCriterionOfStop;
 
-	RunArrangement(GeneticOptimizer& proposedSolver, StopCriterium& proposedCriteriumOfStop);
+	RunArrangement(GeneticOptimizer& proposedSolver, StopCriterion& proposedCriterionOfStop);
 };

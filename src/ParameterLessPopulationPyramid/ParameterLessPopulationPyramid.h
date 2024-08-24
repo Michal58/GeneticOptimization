@@ -12,7 +12,7 @@ class ParameterLessPopulationPyramid: public GeneticOptimizer
 	GreedyHillClimber* commonGreedyOptimizer;
 	Individual* theBestIndividual;
 	Pyramid* populationPyramid;
-	IndividualsHashSet* allDistinctIndividualsSet;		// stotred elements not to delete
+	IndividualsHashSet* allDistinctIndividualsSet;		// stored elements not to delete
 
 	bool isInitialized;
 

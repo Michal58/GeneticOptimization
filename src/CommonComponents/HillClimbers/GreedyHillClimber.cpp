@@ -1,13 +1,13 @@
 #include "GreedyHillClimber.h"
 
-void GreedyHillClimber::setDefalutOrderOfOptimazation()
+void GreedyHillClimber::setDefaultOrderOfOptimization()
 {
-	std::iota(orderOfOptimazation.begin(), orderOfOptimazation.end(), 0);
+	std::iota(orderOfOptimization.begin(), orderOfOptimization.end(), 0);
 }
 
-void GreedyHillClimber::randomlyMixOptimazationOrder()
+void GreedyHillClimber::randomlyMixOptimizationOrder()
 {
-	std::shuffle(orderOfOptimazation.begin(), orderOfOptimazation.end(), *Mt19937Randomizer::getSingletonInstance());
+	std::shuffle(orderOfOptimization.begin(), orderOfOptimization.end(), *Mt19937Randomizer::getSingletonInstance());
 }
 
 void GreedyHillClimber::applyMutationAndUpdateTheBestGeneAndFitnessIfNewGeneIsImprovement(int genIndex, int newGen, int& theBestGen, double& theBestFitness)
@@ -33,12 +33,12 @@ void GreedyHillClimber::optimizeGeneAt(int index)
 
 	while (geneDomain->hasNext())
 	{
-		int possibleGeneImporvement = geneDomain->next();
-		applyMutationAndUpdateTheBestGeneAndFitnessIfNewGeneIsImprovement(index, possibleGeneImporvement, theBestGen, theBestFitness);
+		int possibleGeneImprovement = geneDomain->next();
+		applyMutationAndUpdateTheBestGeneAndFitnessIfNewGeneIsImprovement(index, possibleGeneImprovement, theBestGen, theBestFitness);
 	}
 
 	individualToOptimize->mutateGene(index, theBestGen);
-	individualToOptimize->forcelyMemoizeFitness(theBestFitness);
+	individualToOptimize->forcefullyMemoizeFitness(theBestFitness);
 }
 
 void GreedyHillClimber::tryToUpdateTheBestIndividual()
@@ -50,39 +50,39 @@ void GreedyHillClimber::tryToUpdateTheBestIndividual()
 	}
 }
 
-GreedyHillClimber::GreedyHillClimber(OptimizationCase& caseToInitialize,bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation):
+GreedyHillClimber::GreedyHillClimber(OptimizationCase& caseToInitialize,bool shouldMixOrderOfOptimization, GeneticOptimizerTurnOff turnOffConfirmation):
 	GeneticOptimizer(caseToInitialize),
 	individualToOptimize(nullptr),
-	shouldMixOrderOfOptimazation(shouldMixOrderOfOptimazation),
-	orderOfOptimazation(caseToInitialize.getCountOfDimensions()),
-	countOfTheSameIndividualOptimazations(DEFULT_COUNT_OF_SAME_INDIVIDUAL_OPTIMAZATIONS)
+	shouldMixOrderOfOptimization(shouldMixOrderOfOptimization),
+	orderOfOptimization(caseToInitialize.getCountOfDimensions()),
+	countOfTheSameIndividualOptimizations(DEFAULT_COUNT_OF_SAME_INDIVIDUAL_OPTIMIZATIONS)
 {
-	setDefalutOrderOfOptimazation();
+	setDefaultOrderOfOptimization();
 	theBestIndividual = nullptr;
 }
 
-GreedyHillClimber::GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation):
-	GeneticOptimizer(individualToOptimize.getOptimazationCase()),
+GreedyHillClimber::GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimization, GeneticOptimizerTurnOff turnOffConfirmation):
+	GeneticOptimizer(individualToOptimize.getOptimizationCase()),
 	individualToOptimize(&individualToOptimize),
-	shouldMixOrderOfOptimazation(shouldMixOrderOfOptimazation),
-	orderOfOptimazation(individualToOptimize.getSizeOfGenotype()),
-	countOfTheSameIndividualOptimazations(DEFULT_COUNT_OF_SAME_INDIVIDUAL_OPTIMAZATIONS)
+	shouldMixOrderOfOptimization(shouldMixOrderOfOptimization),
+	orderOfOptimization(individualToOptimize.getSizeOfGenotype()),
+	countOfTheSameIndividualOptimizations(DEFAULT_COUNT_OF_SAME_INDIVIDUAL_OPTIMIZATIONS)
 {
-	setDefalutOrderOfOptimazation();
+	setDefaultOrderOfOptimization();
 	theBestIndividual = nullptr;
 }
 
-GreedyHillClimber::GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation) :
-	GreedyHillClimber(individualToOptimize, shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff::TURN_OFF_CONFIRMATION)
+GreedyHillClimber::GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimization) :
+	GreedyHillClimber(individualToOptimize, shouldMixOrderOfOptimization, GeneticOptimizerTurnOff::TURN_OFF_CONFIRMATION)
 {
 	individualToOptimize.evaluateFitness();
 	theBestIndividual = individualToOptimize.clone();
 }
 
-GreedyHillClimber::GreedyHillClimber(Individual& initialIndividual, bool shouldMixOrderOfOptimazation, int countOfTheSameIndividualOptimazations):
-	GreedyHillClimber(initialIndividual,shouldMixOrderOfOptimazation) 
+GreedyHillClimber::GreedyHillClimber(Individual& initialIndividual, bool shouldMixOrderOfOptimization, int countOfTheSameIndividualOptimizations):
+	GreedyHillClimber(initialIndividual,shouldMixOrderOfOptimization) 
 {
-	this->countOfTheSameIndividualOptimazations = countOfTheSameIndividualOptimazations;
+	this->countOfTheSameIndividualOptimizations = countOfTheSameIndividualOptimizations;
 }
 
 GreedyHillClimber::~GreedyHillClimber()
@@ -92,18 +92,18 @@ GreedyHillClimber::~GreedyHillClimber()
 
 void GreedyHillClimber::optimizeIndividual()
 {
-	if (shouldMixOrderOfOptimazation)
-		randomlyMixOptimazationOrder();
+	if (shouldMixOrderOfOptimization)
+		randomlyMixOptimizationOrder();
 
-	for (int indexAssociatedWithGenToOptimize : orderOfOptimazation)
+	for (int indexAssociatedWithGenToOptimize : orderOfOptimization)
 		optimizeGeneAt(indexAssociatedWithGenToOptimize);
 }
 
 void GreedyHillClimber::setIndividualToOptimize(Individual& individualToOptimize, bool shouldTryToUpdateTheBestIndividual)
 {
 	this->individualToOptimize = &individualToOptimize;
-	if (orderOfOptimazation.size() != individualToOptimize.getSizeOfGenotype())
-		setDefalutOrderOfOptimazation();
+	if (orderOfOptimization.size() != individualToOptimize.getSizeOfGenotype())
+		setDefaultOrderOfOptimization();
 	if (shouldTryToUpdateTheBestIndividual)
 		tryToUpdateTheBestIndividual();
 }
@@ -122,7 +122,7 @@ bool GreedyHillClimber::isReadyToSearch()
 
 void GreedyHillClimber::runIteration()
 {
-	for (int i = 0; i < countOfTheSameIndividualOptimazations; i++)
+	for (int i = 0; i < countOfTheSameIndividualOptimizations; i++)
 		optimizeIndividual();
 	
 	tryToUpdateTheBestIndividual();

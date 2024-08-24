@@ -66,16 +66,16 @@ void ReciprocalNearestNeighborsSelector::selectClustersForMerging(Cluster*& firs
 		moveToSeriesClusterFromSingleClusters(arbitrarilySelectedCluster);
 	}
 
-	bool isTheBestFoundSingleClusterImporvement = true;
+	bool isTheBestFoundSingleClusterImprovement = true;
 
-	while (isTheBestFoundSingleClusterImporvement && !singleClustersOutOfSeries->empty());
+	while (isTheBestFoundSingleClusterImprovement && !singleClustersOutOfSeries->empty());
 	{
 		Cluster* theBestClusterFoundInSingleClusters = findClusterInSingleClustersWhichMakesTheClosestDistanceWithLastElementOfSeries();
 
 		if (seriesOfClustersWithDescendingDistances.size() > 1)
-			isTheBestFoundSingleClusterImporvement = findIfAddingClusterFromSingleClusterKeepsDescendingOrderOfSeries(theBestClusterFoundInSingleClusters);
+			isTheBestFoundSingleClusterImprovement = findIfAddingClusterFromSingleClusterKeepsDescendingOrderOfSeries(theBestClusterFoundInSingleClusters);
 		
-		if (isTheBestFoundSingleClusterImporvement)
+		if (isTheBestFoundSingleClusterImprovement)
 			moveToSeriesClusterFromSingleClusters(theBestClusterFoundInSingleClusters);
 	}
 

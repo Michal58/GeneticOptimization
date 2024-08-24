@@ -20,7 +20,7 @@ void DomainIterator::throwExceptionIfTriedToDoAnActionOnFinishedIterator()
 		next();
 }
 
-void DomainIterator::prepeareNonConstMethodOfStandardIteratorProtocolToRun()
+void DomainIterator::prepareNonConstMethodOfStandardIteratorProtocolToRun()
 {
 	initializeStandardIterationProtocolIfNeeded();
 	throwExceptionIfTriedToDoAnActionOnFinishedIterator();
@@ -40,21 +40,21 @@ DomainIterator::~DomainIterator() = default;
 
 DomainIterator::reference DomainIterator::operator*()
 {
-	prepeareNonConstMethodOfStandardIteratorProtocolToRun();
+	prepareNonConstMethodOfStandardIteratorProtocolToRun();
 
 	return currentElement;
 }
 
 DomainIterator::pointer DomainIterator::operator->()
 {
-	prepeareNonConstMethodOfStandardIteratorProtocolToRun();
+	prepareNonConstMethodOfStandardIteratorProtocolToRun();
 
 	return &currentElement;
 }
 
 DomainIterator& DomainIterator::operator++()
 {
-	prepeareNonConstMethodOfStandardIteratorProtocolToRun();
+	prepareNonConstMethodOfStandardIteratorProtocolToRun();
 
 	DomainIterator& iteratorToReturn = *this;
 
@@ -89,7 +89,7 @@ DomainIterationPerformer DomainIterator::end()
 	return DomainIterationPerformer(DomainIterator::getFinishedIteratorInstance());
 }
 
-void FinishedIterator::causeInitializationAsStarndardIterator()
+void FinishedIterator::causeInitializationAsStandardIterator()
 {
 	initializeStandardIterationProtocolIfNeeded();
 }
@@ -97,7 +97,7 @@ void FinishedIterator::causeInitializationAsStarndardIterator()
 FinishedIterator::FinishedIterator():
 	DomainIterator()
 {
-	causeInitializationAsStarndardIterator();
+	causeInitializationAsStandardIterator();
 }
 
 bool FinishedIterator::hasNext() const

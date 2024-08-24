@@ -41,9 +41,9 @@ void MinHeapBasedSelector::selectClustersForMerging(Cluster*& firstSelectedClust
 
 void MinHeapBasedSelector::updateWithMergedCluster(Cluster* mergedCluster)
 {
-	std::vector<ClustersPair> containerForAsscoaitedPairs;
-	associatedLookup->putIntoContainerPairsAssociatedWithCluster(containerForAsscoaitedPairs, mergedCluster);
-	for (ClustersPair newPair : containerForAsscoaitedPairs)
+	std::vector<ClustersPair> containerForAssociatedPairs;
+	associatedLookup->putIntoContainerPairsAssociatedWithCluster(containerForAssociatedPairs, mergedCluster);
+	for (ClustersPair newPair : containerForAssociatedPairs)
 		minHeapOfPairs.push(HeapNodeOfClusterPair(newPair, *this));
 }
 
