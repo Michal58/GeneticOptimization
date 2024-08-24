@@ -45,7 +45,7 @@ void ParameterLessPopulationPyramid::tryToImproveSolutionWithCluster(GeneIndexCl
     }
 }
 
-ParameterLessPopulationPyramid::ParameterLessPopulationPyramid(OptimazationCase& caseInstance):
+ParameterLessPopulationPyramid::ParameterLessPopulationPyramid(OptimizationCase& caseInstance):
     GeneticOptimizer(caseInstance),
     isInitialized(false)
 {

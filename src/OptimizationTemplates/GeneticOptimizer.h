@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OptimazationCase.h"
+#include "OptimizationCase.h"
 #include "Individual.h"
 
 #define LOG_ALLOWED 1
@@ -21,11 +21,11 @@ class GeneticOptimizer
 
 protected:
 
-	OptimazationCase& caseInstance;
+	OptimizationCase& caseInstance;
 
 public:
 
-	GeneticOptimizer(OptimazationCase& caseInstance);
+	GeneticOptimizer(OptimizationCase& caseInstance);
 	virtual ~GeneticOptimizer();
 
 	virtual void reset() = 0;

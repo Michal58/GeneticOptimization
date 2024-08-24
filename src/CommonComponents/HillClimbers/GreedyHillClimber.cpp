@@ -50,7 +50,7 @@ void GreedyHillClimber::tryToUpdateTheBestIndividual()
 	}
 }
 
-GreedyHillClimber::GreedyHillClimber(OptimazationCase& caseToInitialize,bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation):
+GreedyHillClimber::GreedyHillClimber(OptimizationCase& caseToInitialize,bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation):
 	GeneticOptimizer(caseToInitialize),
 	individualToOptimize(nullptr),
 	shouldMixOrderOfOptimazation(shouldMixOrderOfOptimazation),

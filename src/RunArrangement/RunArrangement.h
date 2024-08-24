@@ -1,6 +1,6 @@
 #pragma once
-#include "../OptimazationTemplates/OptimazationCase.h"
-#include "../OptimazationTemplates/GeneticOptimizer.h"
+#include "../OptimizationTemplates/OptimizationCase.h"
+#include "../OptimizationTemplates/GeneticOptimizer.h"
 
 struct RunArrangement {
 

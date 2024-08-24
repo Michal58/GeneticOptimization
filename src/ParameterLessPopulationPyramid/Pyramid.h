@@ -4,13 +4,13 @@
 class Pyramid
 {
 	std::vector<PopulationLevel*> pyramidLevels;
-	OptimazationCase& caseToOptimize;
+	OptimizationCase& caseToOptimize;
 
 	void deleteLevelsFromPyramid();
 
 public:
 
-	Pyramid(OptimazationCase& caseToOptimize);
+	Pyramid(OptimizationCase& caseToOptimize);
 	~Pyramid();
 
 	std::vector<PopulationLevel*>::iterator begin();

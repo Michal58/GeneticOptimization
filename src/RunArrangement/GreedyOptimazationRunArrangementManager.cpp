@@ -1,11 +1,11 @@
 #include "GreedyOptimazationRunArrangementManager.h"
 
-ManagerOfRunArrangement* GreedyOptimazationRunArrangementManager::createInstance(OptimazationCase& givenCaseToSolve)
+ManagerOfRunArrangement* GreedyOptimazationRunArrangementManager::createInstance(OptimizationCase& givenCaseToSolve)
 {
 	return new GreedyOptimazationRunArrangementManager(givenCaseToSolve);
 }
 
-GreedyOptimazationRunArrangementManager::GreedyOptimazationRunArrangementManager(OptimazationCase& givenCaseToSolve):
+GreedyOptimazationRunArrangementManager::GreedyOptimazationRunArrangementManager(OptimizationCase& givenCaseToSolve):
 	ManagerOfRunArrangement(givenCaseToSolve)
 {
 	initialIndividual = new ClassicalIndividual(givenCaseToSolve);

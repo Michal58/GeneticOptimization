@@ -147,7 +147,7 @@ ClassicalIndividual* GeneticAlgorithm::copyTheBestSolutionInTheGeneration()
 }
 
 
-GeneticAlgorithm::GeneticAlgorithm(int populationSize, double crossoverChance, double genMutationChance, OptimazationCase& standardEvaluator):
+GeneticAlgorithm::GeneticAlgorithm(int populationSize, double crossoverChance, double genMutationChance, OptimizationCase& standardEvaluator):
 	GeneticOptimizer(standardEvaluator),
 	populationSize(populationSize),
 	crossoverChance(crossoverChance),

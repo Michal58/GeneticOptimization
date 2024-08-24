@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "../OptimazationTemplates/OptimazationCase.h"
-#include "../OptimazationTemplates/GeneticOptimizer.h"
+#include "../OptimizationTemplates/OptimizationCase.h"
+#include "../OptimizationTemplates/GeneticOptimizer.h"
 #include "ClassicalIndividual.h"
 
 #define GEN_OPTIMAZATION_CHANCE 0.001
@@ -58,7 +58,7 @@ private:
 
 public:
 
-	GeneticAlgorithm(int populationSize, double crossoverChance, double genMutationChance, OptimazationCase& standardEvaluator);
+	GeneticAlgorithm(int populationSize, double crossoverChance, double genMutationChance, OptimizationCase& standardEvaluator);
 	~GeneticAlgorithm();
 
 	void reset() override;

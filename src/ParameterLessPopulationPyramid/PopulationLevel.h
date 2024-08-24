@@ -1,5 +1,5 @@
 #pragma once
-#include "../OptimazationTemplates/Individual.h"
+#include "../OptimizationTemplates/Individual.h"
 #include "../CommonComponents/Functionalities/Functionalities.h"
 #include "../CommonComponents/Clusterization/ClusterizationPerformer.h"
 #include "../CommonComponents/Clusterization/SelectorsOfClusterMerging/MinHeapBasedSelector.h"
@@ -18,7 +18,7 @@ class PopulationLevel
 {
 	const static int DEFAULT_POPULATION_SIZE = 1;
 
-	OptimazationCase& caseToOptimize;
+	OptimizationCase& caseToOptimize;
 
 	std::vector<P3Individual*> population;
 	GenesFrequenciesLookup populationGenesFrequenciesLookup;
@@ -32,7 +32,7 @@ class PopulationLevel
 
 public:
 
-	PopulationLevel(OptimazationCase& caseToOptimize);
+	PopulationLevel(OptimizationCase& caseToOptimize);
 	~PopulationLevel();
 	void addIndividual(P3Individual* newIndividual);
 	std::vector<Cluster*>& shareClusters();

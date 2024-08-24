@@ -132,7 +132,7 @@ double EntropyBasedInitializer::calculateDistanceBetweenTwoClusterLeaves(Cluster
         return ENTROPY_MINUEND - (HCi + HCj) / HCiCj;
 }
 
-EntropyBasedInitializer::EntropyBasedInitializer(OptimazationCase& caseToSolve, GenesFrequenciesLookup& frequenciesOfGenesLookup):
+EntropyBasedInitializer::EntropyBasedInitializer(OptimizationCase& caseToSolve, GenesFrequenciesLookup& frequenciesOfGenesLookup):
     caseToSolve(caseToSolve),
     frequenciesOfGenesLookup(frequenciesOfGenesLookup) {}
 

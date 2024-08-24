@@ -20,7 +20,7 @@ ClassicalIndividual* PairOfIndividuals::getFitterIndividual()
 		return individual2;
 }
 
-ClassicalIndividual::ClassicalIndividual(OptimazationCase& evaluator) :Individual(evaluator) {}
+ClassicalIndividual::ClassicalIndividual(OptimizationCase& evaluator) :Individual(evaluator) {}
 
 ClassicalIndividual::ClassicalIndividual(const ClassicalIndividual& other): Individual(other) {}
 

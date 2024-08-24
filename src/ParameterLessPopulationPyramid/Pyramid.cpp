@@ -5,7 +5,7 @@ void Pyramid::deleteLevelsFromPyramid()
     clearVectorOfPointers(pyramidLevels);
 }
 
-Pyramid::Pyramid(OptimazationCase& caseToOptimize):
+Pyramid::Pyramid(OptimizationCase& caseToOptimize):
     caseToOptimize(caseToOptimize) {}
 
 Pyramid::~Pyramid()

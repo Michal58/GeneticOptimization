@@ -78,7 +78,7 @@ public:
 	int next(int iOffset) override;
 };
 
-class OptimazationCase
+class OptimizationCase
 {
 public:
 

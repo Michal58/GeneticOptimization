@@ -31,7 +31,7 @@ void PopulationLevel::conductClusterization(ClusterizationPerformer& clusterizat
 	removeClusterWithCardinalityOfGenotype();
 }
 
-PopulationLevel::PopulationLevel(OptimazationCase& caseToOptimize):
+PopulationLevel::PopulationLevel(OptimizationCase& caseToOptimize):
 	caseToOptimize(caseToOptimize)
 {
 	estimatedGenesClusters = new std::vector<Cluster*>;

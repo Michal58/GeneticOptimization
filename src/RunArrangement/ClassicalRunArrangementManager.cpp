@@ -1,6 +1,6 @@
 #include "ClassicalRunArrangementManager.h"
 
-ClassicalRunArrangementManager::ClassicalRunArrangementManager(OptimazationCase& givenCaseToSolve):
+ClassicalRunArrangementManager::ClassicalRunArrangementManager(OptimizationCase& givenCaseToSolve):
 	ManagerOfRunArrangement(givenCaseToSolve) {}
 
 StopCriterium* ClassicalRunArrangementManager::createStopCriterium()
@@ -18,7 +18,7 @@ GeneticOptimizer* ClassicalRunArrangementManager::createGeneticOptimizer()
 	);
 }
 
-ManagerOfRunArrangement* ClassicalRunArrangementManager::createInstance(OptimazationCase& givenCaseToSolve)
+ManagerOfRunArrangement* ClassicalRunArrangementManager::createInstance(OptimizationCase& givenCaseToSolve)
 {
 	return new ClassicalRunArrangementManager(givenCaseToSolve);
 }

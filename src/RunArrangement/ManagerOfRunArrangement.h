@@ -4,7 +4,7 @@
 class ManagerOfRunArrangement {
 protected:
 
-	OptimazationCase& givenCaseToSolve;
+	OptimizationCase& givenCaseToSolve;
 	RunArrangement* createdRunArrangement;
 
 	StopCriterium* arrangedStopCriterium;
@@ -18,7 +18,7 @@ protected:
 
 public:
 
-	ManagerOfRunArrangement(OptimazationCase& givenCaseToSolve);
+	ManagerOfRunArrangement(OptimizationCase& givenCaseToSolve);
 	virtual ~ManagerOfRunArrangement();
 	RunArrangement& shareRunArrangement();
 };

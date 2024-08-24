@@ -12,8 +12,8 @@ class GreedyOptimazationRunArrangementManager: public ManagerOfRunArrangement
 
 public:
 
-	static ManagerOfRunArrangement* createInstance(OptimazationCase& givenCaseToSolve);
-	GreedyOptimazationRunArrangementManager(OptimazationCase& givenCaseToSolve);
+	static ManagerOfRunArrangement* createInstance(OptimizationCase& givenCaseToSolve);
+	GreedyOptimazationRunArrangementManager(OptimizationCase& givenCaseToSolve);
 	~GreedyOptimazationRunArrangementManager();
 
 	StopCriterium* createStopCriterium() override;

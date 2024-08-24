@@ -1,12 +1,12 @@
 #pragma once
-#include "OptimazationTemplates/OptimazationCase.h"
-#include "OptimazationTemplates/GeneticOptimizer.h"
+#include "OptimizationTemplates/OptimizationCase.h"
+#include "OptimizationTemplates/GeneticOptimizer.h"
 #include "RunArrangement/RunArrangement.h"
 #include "RunArrangement/ClassicalRunArrangementManager.h"
 #include "RunArrangement/GreedyOptimazationRunArrangementManager.h"
 #include "RunArrangement/P3RunArrangementManager.h"
 
-typedef ManagerOfRunArrangement* (*arrangementMangerCreator) (OptimazationCase&);
+typedef ManagerOfRunArrangement* (*arrangementMangerCreator) (OptimizationCase&);
 
 const arrangementMangerCreator ARRANGEMENT_CONSTRUCTORS[] = 
 {
@@ -15,7 +15,7 @@ const arrangementMangerCreator ARRANGEMENT_CONSTRUCTORS[] =
 	& P3RunArrangementManager::createInstance
 };
 
-struct OptimazationResult 
+struct OptimizationResult 
 {
 	double fitnessValue;
 	std::vector<int>* solutionVector;		// struct only stores result, so the task of vector deletion is caller responsibility
@@ -29,7 +29,7 @@ public:
 
 private:
 
-	OptimazationCase& givenCaseToSolve;
+	OptimizationCase& givenCaseToSolve;
 	RunArrangement* possiblyCreatedRunArrangement;
 	RunArrangement& arrangedRunSet;
 	ManagerOfRunArrangement* possiblyPassedManagerOfRunArrangement;
@@ -38,10 +38,10 @@ private:
 
 public:
 
-	OptimazationRun(OptimazationCase& givenCaseToSolve, GeneticOptimizer& givenOptimizerAsSolver, StopCriterium& givenCriteriumOfStop);
-	OptimazationRun(OptimazationCase& givenCaseToSolve, RunArrangement& arrangedRunSet);
-	OptimazationRun(OptimazationCase& givenCaseToSolve, ManagerOfRunArrangement* arrangementManager);
-	OptimazationRun(OptimazationCase& givenCaseToSolve, int indexOfArrangementManagerCreator);
+	OptimazationRun(OptimizationCase& givenCaseToSolve, GeneticOptimizer& givenOptimizerAsSolver, StopCriterium& givenCriteriumOfStop);
+	OptimazationRun(OptimizationCase& givenCaseToSolve, RunArrangement& arrangedRunSet);
+	OptimazationRun(OptimizationCase& givenCaseToSolve, ManagerOfRunArrangement* arrangementManager);
+	OptimazationRun(OptimizationCase& givenCaseToSolve, int indexOfArrangementManagerCreator);
 	~OptimazationRun();
-	OptimazationResult findOptimizedSolution();
+	OptimizationResult findOptimizedSolution();
 };

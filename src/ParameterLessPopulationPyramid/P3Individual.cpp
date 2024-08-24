@@ -11,7 +11,7 @@ void P3Individual::registerChangesInGenotype()
 	signalizePossibleChangeInHash();
 }
 
-P3Individual::P3Individual(OptimazationCase& evaluator):
+P3Individual::P3Individual(OptimizationCase& evaluator):
 	Individual(evaluator),
 	Hashable() {}
 
