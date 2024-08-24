@@ -3,7 +3,7 @@
 ClusterizationPerformer::ClusterizationPerformer(SelectorOfClustersMerging& clustersToMergeSelector):
     clustersToMergeSelector(clustersToMergeSelector) {}
 
-std::vector<Cluster*>* ClusterizationPerformer::perfromClusterization(DistancesLookup& distances, bool notAddClustersWithZeroDistances)
+std::vector<Cluster*>* ClusterizationPerformer::perfromClusterization(DistancesLookup& distances, bool shouldDeleteClustersWithZeroDistances)
 {
     std::vector<Cluster*>* allClusters = new std::vector<Cluster*>;
     std::vector<Cluster*> clustersToDelete;
@@ -17,8 +17,9 @@ std::vector<Cluster*>* ClusterizationPerformer::perfromClusterization(DistancesL
         clustersToMergeSelector.selectClustersForMerging(firstClusterToMerge, secondClusterToMerge);
         double selectedClustersDistance = distances.getDistance(*firstClusterToMerge, *secondClusterToMerge);
         Cluster* firstAndSecondUnion = distances.replaceClustersByMergedClusterAndReturnIt(*firstClusterToMerge, *secondClusterToMerge);
-        clustersToMergeSelector.updateWithNewCluster(firstAndSecondUnion);
-        if (!notAddClustersWithZeroDistances || !selectedClustersDistance == 0)
+        clustersToMergeSelector.updateWithMergedCluster(firstAndSecondUnion);
+
+        if (!shouldDeleteClustersWithZeroDistances || !selectedClustersDistance == 0)
         {
             allClusters->push_back(firstClusterToMerge);
             allClusters->push_back(secondClusterToMerge);

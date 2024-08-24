@@ -32,21 +32,38 @@ bool GenesPairInGenotype::equals(const Hashable& other) const
 		return false;
 
 	GenesPairInGenotype& otherGenesPair = (GenesPairInGenotype&)other;
-	return this->firstGeneWithItsIndex == otherGenesPair.firstGeneWithItsIndex
-		&& this->secondGeneWithItsIndex == otherGenesPair.secondGeneWithItsIndex;
+	return (this->firstGeneWithItsIndex == otherGenesPair.firstGeneWithItsIndex
+			&& this->secondGeneWithItsIndex == otherGenesPair.secondGeneWithItsIndex)
+		|| (this->firstGeneWithItsIndex == otherGenesPair.secondGeneWithItsIndex
+			&& this->secondGeneWithItsIndex == otherGenesPair.firstGeneWithItsIndex);
 }
 
 unsigned int GenesPairInGenotype::calculateHash() const
 {
-	std::vector<int> valuesToHash = 
+	std::vector<int> valuesToHashForFirstGene = 
 	{
 		firstGeneWithItsIndex.genValue,
+		firstGeneWithItsIndex.indexInGenotype
+	};
+
+	std::vector<int> valuesToHashForSecondGene =
+	{
 		secondGeneWithItsIndex.genValue,
-		firstGeneWithItsIndex.indexInGenotype,
 		secondGeneWithItsIndex.indexInGenotype
 	};
 
-	unsigned int hashValue = Hashable::calculateHashOfVectorOfElementaryTypes(valuesToHash);
+	unsigned int firstSubHash = Hashable::calculateHashOfVectorOfElementaryTypes(valuesToHashForFirstGene);
+	unsigned int secondSubHash = Hashable::calculateHashOfVectorOfElementaryTypes(valuesToHashForSecondGene);
+
+	std::vector<unsigned int> combinedSubhashes =
+	{
+		firstSubHash,
+		secondSubHash
+	};
+
+	std::sort(combinedSubhashes.begin(), combinedSubhashes.end());
+
+	unsigned int hashValue = Hashable::combineHashes(combinedSubhashes[0], combinedSubhashes[1]);
 
 	return hashValue;
 }

@@ -12,10 +12,11 @@ struct ClusterBaseCrossoverParameters: public ParametersOfCrossover
 	ClusterBaseCrossoverParameters(GeneIndexCluster& crossoverCluster);
 };
 
-struct PreviousGenes
+struct PreviousGenes: public ResultOfCrossover
 {
+	bool didGenesChange;
 	std::vector<int>* previousGenes;
-	PreviousGenes(std::vector<int>*  previousGenes);
+	PreviousGenes(std::vector<int>*  previousGenes, bool didGenesChange);
 };
 
 class P3Individual: public Individual, public Hashable

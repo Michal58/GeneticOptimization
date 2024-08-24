@@ -14,11 +14,19 @@ void ParameterLessPopulationPyramid::decideOnAddingIndividualToPyramid(P3Individ
 
 void ParameterLessPopulationPyramid::tryToImproveSolutionWithCluster(GeneIndexCluster& clusterOfChange, P3Individual& solution, PopulationLevel& population)
 {
-    bool didSolutionDecreased = true;
-    std::vector<int> shuffledPopulationIndicies = population.getShuffledIndiciesOfIndividualsInPopulation();
-    for (std::vector<int>::iterator it = shuffledPopulationIndicies.begin(); didSolutionDecreased && it != shuffledPopulationIndicies.end(); it++)
+    bool wasSolutionChanged = false;
+    std::unordered_set<int> usedIndicesOfPopulationIndividuals;
+    int populationLevelSize = population.size();
+
+    while (!wasSolutionChanged && usedIndicesOfPopulationIndividuals.size() < populationLevelSize)
     {
-        P3Individual& randomIndividualFromPopulation = population.getIndividualFromIndex(*it);
+        int diceRoll;
+        do
+            diceRoll = Mt19937Randomizer::getSingletonInstance()->randInRange(populationLevelSize);
+        while (isThereElementIn<std::unordered_set<int>, int>(usedIndicesOfPopulationIndividuals, diceRoll));
+        usedIndicesOfPopulationIndividuals.insert(diceRoll);
+
+        P3Individual& randomIndividualFromPopulation = population.getIndividualFromIndex(diceRoll);
         ClusterBaseCrossoverParameters parameters(clusterOfChange);
 
         double startingFitness = solution.evaluateFitness();
@@ -27,11 +35,11 @@ void ParameterLessPopulationPyramid::tryToImproveSolutionWithCluster(GeneIndexCl
         PreviousGenes* resultOfCrossoverMadeInPlace = (PreviousGenes*)solution.crossover(randomIndividualFromPopulation, parameters);
 
         double fitnessAfterChanges = solution.evaluateFitness();
-        didSolutionDecreased = fitnessAfterChanges < startingFitness;
-
-        if (didSolutionDecreased)
+        wasSolutionChanged = resultOfCrossoverMadeInPlace->didGenesChange;
+        bool didSolutionDecreased = fitnessAfterChanges < startingFitness;
+        if (wasSolutionChanged && didSolutionDecreased)
             solution.revertChanges(clusterOfChange, resultOfCrossoverMadeInPlace->previousGenes, startingFitness, startingHash);
-
+        
         delete resultOfCrossoverMadeInPlace->previousGenes;
         delete resultOfCrossoverMadeInPlace;
     }
@@ -97,7 +105,7 @@ void ParameterLessPopulationPyramid::runIteration()
             decideOnAddingIndividualToPyramid(currentSolutionIndividual, iPyramidDepth + 1);
     }
 
-    if (theBestIndividual == nullptr || currentSolutionIndividual.evaluateFitness() > currentSolutionIndividual.evaluateFitness())
+    if (theBestIndividual == nullptr || currentSolutionIndividual.evaluateFitness() > theBestIndividual->evaluateFitness())
     {
         delete theBestIndividual;
         theBestIndividual = new P3Individual(currentSolutionIndividual);

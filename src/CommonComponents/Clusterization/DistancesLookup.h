@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include <algorithm>
 #include "Cluster.h"
 #include "../Hashing/ObjectBaseHasher.h"
 
@@ -40,7 +41,7 @@ class DistancesLookup
 	Cluster* mergeClusters(const Cluster& firstToMerge, const Cluster& secondToMerge);
 	double calculateCkDistanceToCiCjUnion(Cluster& Ck, Cluster& Ci, Cluster& Cj);
 	void mapDistanceToMergedCluster(Cluster* distanceCalculationParticipant,Cluster* mergedCluster, Cluster& firstMergeMember, Cluster& secondMergeMember);
-	void removeClusterFromDistances(Cluster& toRemove);
+	void removePairsWithClusterFromDistances(Cluster& toRemove);
 	void updateDistancesToMergedCluster(Cluster* mergedCluster, Cluster& firstMergeMember, Cluster& secondMergeMember);
 
 public:

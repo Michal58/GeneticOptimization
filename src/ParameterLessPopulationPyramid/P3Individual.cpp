@@ -46,13 +46,17 @@ ResultOfCrossover* P3Individual::crossover(Individual& donorOfGens, ParametersOf
 	previousGenesContainer = new std::vector<int>;
 	previousGenesContainer->reserve(crossoverCluster.cardinality());
 
+	bool isThereChangeInGenotype = false;
 	for (int indexOfChange : crossoverCluster.shareIndicies())
 	{
 		previousGenesContainer->push_back(genotype->at(indexOfChange));
-		genotype->at(indexOfChange) = donorOfGens.getGeneAt(indexOfChange);
+		int donatedGene = donorOfGens.getGeneAt(indexOfChange);
+		int currentGene = genotype->at(indexOfChange);
+		isThereChangeInGenotype = isThereChangeInGenotype || donatedGene != currentGene;
+		genotype->at(indexOfChange) = donatedGene;
 	}
 
-	return (ResultOfCrossover*) new PreviousGenes(previousGenesContainer);
+	return (ResultOfCrossover*) new PreviousGenes(previousGenesContainer, isThereChangeInGenotype);
 }
 
 Individual* P3Individual::clone()
@@ -83,7 +87,8 @@ bool P3Individual::equals(const Hashable& other) const
 	return isInstanceOf<P3Individual>(&other) && *this == *((P3Individual*)&other);
 }
 
-PreviousGenes::PreviousGenes(std::vector<int>* previousGenes)
+PreviousGenes::PreviousGenes(std::vector<int>* previousGenes, bool didGenesChange):
+	didGenesChange(didGenesChange)
 {
 	this->previousGenes = previousGenes;
 }

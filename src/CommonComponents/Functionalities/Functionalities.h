@@ -18,6 +18,9 @@ bool isInstanceOf(U* const supposedDerivedClass);
 template <typename T, typename U>
 bool isInstanceOf(const U& supposedDerivedClass);
 
+template <typename T, typename U>
+bool isThereElementIn(T set, U element);
+
 
 // defininitons of template functions - I dedcided it is a better solution than defining it in cpp file
 
@@ -52,4 +55,10 @@ template<typename T, typename U>
 inline bool isInstanceOf(const U& supposedDerivedClass)
 {
 	return isInstanceOf<const T>(&supposedDerivedClass);
+}
+
+template<typename T, typename U>
+inline bool isThereElementIn(T set, U element)
+{
+	return set.find(element) != set.end();
 }

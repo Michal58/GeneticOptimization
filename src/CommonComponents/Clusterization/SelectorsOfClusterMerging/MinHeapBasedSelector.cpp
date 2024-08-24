@@ -24,7 +24,8 @@ DistancesLookup& MinHeapBasedSelector::getAssociatedLookup()
 void MinHeapBasedSelector::setAssociatedLookup(DistancesLookup& associatedLookup)
 {
 	SelectorOfClustersMerging::setAssociatedLookup(associatedLookup);
-	for (ClustersPair pair : associatedLookup.getKeysOfMap())
+	std::vector<ClustersPair> pairsInLookup = associatedLookup.getKeysOfMap();
+	for (ClustersPair pair : pairsInLookup)
 		minHeapOfPairs.push(HeapNodeOfClusterPair(pair, *this));
 }
 
@@ -38,10 +39,10 @@ void MinHeapBasedSelector::selectClustersForMerging(Cluster*& firstSelectedClust
 	secondSelectedClusterContainer = &clustersWithTheSmallestDistanceToEachOther.second();
 }
 
-void MinHeapBasedSelector::updateWithNewCluster(Cluster* newCluster)
+void MinHeapBasedSelector::updateWithMergedCluster(Cluster* mergedCluster)
 {
 	std::vector<ClustersPair> containerForAsscoaitedPairs;
-	associatedLookup->putIntoContainerPairsAssociatedWithCluster(containerForAsscoaitedPairs, newCluster);
+	associatedLookup->putIntoContainerPairsAssociatedWithCluster(containerForAsscoaitedPairs, mergedCluster);
 	for (ClustersPair newPair : containerForAsscoaitedPairs)
 		minHeapOfPairs.push(HeapNodeOfClusterPair(newPair, *this));
 }

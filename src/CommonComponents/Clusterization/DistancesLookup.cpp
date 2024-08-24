@@ -26,6 +26,7 @@ unsigned int ClustersPair::calculateHash() const
 		firstCluster->getAssociatedDistincNumber(),
 		secondCluster->getAssociatedDistincNumber()
 	};
+	std::sort(clustersDistinctNumbers.begin(), clustersDistinctNumbers.end());
 
 	return Hashable::calculateHashOfVectorOfElementaryTypes<int>(clustersDistinctNumbers);
 }
@@ -37,8 +38,8 @@ bool ClustersPair::equals(const Hashable& other) const
 
 	ClustersPair& otherClusterPair = (ClustersPair&)other;
 
-	return (this->firstCluster == otherClusterPair.firstCluster && this->secondCluster == otherClusterPair.secondCluster)
-		|| (this->firstCluster == otherClusterPair.secondCluster && this->secondCluster == otherClusterPair.firstCluster);
+	return (*this->firstCluster == *otherClusterPair.firstCluster && *this->secondCluster == *otherClusterPair.secondCluster)
+		|| (*this->firstCluster == *otherClusterPair.secondCluster && *this->secondCluster == *otherClusterPair.firstCluster);
 }
 
 bool DistancesLookup::isThereClusterPair(ClustersPair pairToCheck)
@@ -55,6 +56,8 @@ double DistancesLookup::calculateCkDistanceToCiCjUnion(Cluster& Ck, Cluster& Ci,
 {
 	ClustersPair CkCi(Ck, Ci);
 	ClustersPair CkCj(Ck, Cj);
+	
+
 	return (Ci.cardinality() * distancesMap[CkCi] + Cj.cardinality() * distancesMap[CkCj])
 		/ (Ci.cardinality() + Cj.cardinality());
 }
@@ -66,7 +69,7 @@ void DistancesLookup::mapDistanceToMergedCluster(Cluster* distanceCalculationPar
 	distancesMap.insert({ newPair,newDistance });
 }
 
-void DistancesLookup::removeClusterFromDistances(Cluster& toRemove)
+void DistancesLookup::removePairsWithClusterFromDistances(Cluster& toRemove)
 {
 	for (Cluster* kCluster : allSingleClusters)
 	{
@@ -80,8 +83,9 @@ void DistancesLookup::updateDistancesToMergedCluster(Cluster* mergedCluster, Clu
 	for (Cluster* kCluster : allSingleClusters)
 		mapDistanceToMergedCluster(kCluster, mergedCluster, firstMergeMember, secondMergeMember);
 
-	removeClusterFromDistances(firstMergeMember);
-	removeClusterFromDistances(secondMergeMember);
+	distancesMap.erase({ firstMergeMember,secondMergeMember });
+	removePairsWithClusterFromDistances(firstMergeMember);
+	removePairsWithClusterFromDistances(secondMergeMember);
 }
 
 DistancesLookup::DistancesLookup(InitializerOfDistancesLookup& initializer)

@@ -37,6 +37,6 @@ public:
 	DistancesLookup& getAssociatedLookup();
 	void setAssociatedLookup(DistancesLookup& associatedLookup) override;
 	void selectClustersForMerging(Cluster*& firstSelectedClusterContainer, Cluster*& secondSelectedClusterContainer) override;
-	void updateWithNewCluster(Cluster* newCluster) override;
+	void updateWithMergedCluster(Cluster* mergedCluster) override;
 };
 

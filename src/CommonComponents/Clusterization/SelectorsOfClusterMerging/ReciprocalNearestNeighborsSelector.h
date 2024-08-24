@@ -19,6 +19,6 @@ public:
 	~ReciprocalNearestNeighborsSelector();
 	void setAssociatedLookup(DistancesLookup& associatedLookup) override;
 	void selectClustersForMerging(Cluster*& fitsSelectedClusterContainer, Cluster*& secondSelectedClusterContainer) override;
-	void updateWithNewCluster(Cluster* newCluster) override;
+	void updateWithMergedCluster(Cluster* mergedCluster) override;
 };
 

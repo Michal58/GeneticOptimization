@@ -11,7 +11,7 @@ void EntropyBasedInitializer::createSingletonClusters(DistancesLookup& distances
 
 void EntropyBasedInitializer::fillDistancesWithFirstIndexOfSequenceAlwaysSmallerThanSecond(int firstIndexOfLeafInSequence, std::vector<Cluster*>& sequenceOfClusters, DistancesLookup& distancesToInitialize)
 {
-    ClusterPairsToDistances distancesMapping = InitializerOfDistancesLookup::accessDistancesMap(distancesToInitialize);
+    ClusterPairsToDistances& distancesMapping = InitializerOfDistancesLookup::accessDistancesMap(distancesToInitialize);
     for (int jSecondClusterInPair = firstIndexOfLeafInSequence + 1; jSecondClusterInPair < sequenceOfClusters.size(); jSecondClusterInPair++)
     {
         ClustersPair pairToDetermineDistance(*sequenceOfClusters[firstIndexOfLeafInSequence], *sequenceOfClusters[jSecondClusterInPair]);
@@ -71,7 +71,9 @@ std::vector<GenesPairInGenotype> EntropyBasedInitializer::getCartesianProductOfG
 void EntropyBasedInitializer::updateEntropySum(double& currentSum, int frequencyOfElement)
 {
     double probabilityOfOccurance = getProbabilityFromSetOfGenesFrequency(frequencyOfElement);
-    currentSum += probabilityOfOccurance * std::log(probabilityOfOccurance);
+    double nextUpdate = probabilityOfOccurance == static_cast<double>(0) ?
+        0 : probabilityOfOccurance * std::log(probabilityOfOccurance);
+    currentSum += nextUpdate;
 }
 
 double EntropyBasedInitializer::calculateEntropy(GeneIndexCluster& leaf)
@@ -127,7 +129,7 @@ double EntropyBasedInitializer::calculateDistanceBetweenTwoClusterLeaves(Cluster
     if (HCiCj == 0)
         return 0;
     else
-        return ENTROPY_MINUEND - (calculateEntropy(Ci) + calculateEntropy(Cj)) / calculateEntropy(CiCj);
+        return ENTROPY_MINUEND - (HCi + HCj) / HCiCj;
 }
 
 EntropyBasedInitializer::EntropyBasedInitializer(OptimazationCase& caseToSolve, GenesFrequenciesLookup& frequenciesOfGenesLookup):

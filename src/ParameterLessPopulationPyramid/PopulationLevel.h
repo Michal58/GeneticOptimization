@@ -39,5 +39,6 @@ public:
 	std::vector<int> getShuffledIndiciesOfIndividualsInPopulation();
 	P3Individual* getSomeIndividual();
 	P3Individual& getIndividualFromIndex(int index);
+	int size();
 };
 

@@ -72,6 +72,11 @@ P3Individual& PopulationLevel::getIndividualFromIndex(int index)
 	return *(population[index]);
 }
 
+int PopulationLevel::size()
+{
+	return population.size();
+}
+
 bool ClusterSizeComparator::operator()(Cluster* first, Cluster* second) const
 {
 	return first->cardinality() < second->cardinality();

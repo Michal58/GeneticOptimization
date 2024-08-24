@@ -84,7 +84,7 @@ void ReciprocalNearestNeighborsSelector::selectClustersForMerging(Cluster*& firs
 	seriesOfClustersWithDescendingDistances.pop_back();
 }
 
-void ReciprocalNearestNeighborsSelector::updateWithNewCluster(Cluster* newCluster)
+void ReciprocalNearestNeighborsSelector::updateWithMergedCluster(Cluster* mergedCluster)
 {
-	seriesOfClustersWithDescendingDistances.back() = newCluster;
+	seriesOfClustersWithDescendingDistances.back() = mergedCluster;
 }

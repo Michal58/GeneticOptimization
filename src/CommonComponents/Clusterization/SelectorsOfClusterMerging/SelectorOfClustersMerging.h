@@ -13,6 +13,6 @@ public:
 	SelectorOfClustersMerging(DistancesLookup& associatedLookup);
 	virtual void setAssociatedLookup(DistancesLookup& associatedLookup);
 	virtual void selectClustersForMerging(Cluster*& fitsSelectedClusterContainer, Cluster*& secondSelectedClusterContainer) = 0;
-	virtual void updateWithNewCluster(Cluster* newCluster) = 0;
+	virtual void updateWithMergedCluster(Cluster* mergedCluster) = 0;
 };
 
