@@ -2,8 +2,8 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "../OptimazationTemplates/OptimazationCase.h"
-#include "../OptimazationTemplates/Individual.h"
+#include "../OptimizationTemplates/OptimizationCase.h"
+#include "../OptimizationTemplates/Individual.h"
 #include "../CommonComponents/Randomizers/Mt19937Randomizer.h"
 
 class ClassicalIndividual;
@@ -36,7 +36,7 @@ class ClassicalIndividual:public Individual
 {
 public:
 
-	ClassicalIndividual(OptimazationCase& evaluator);
+	ClassicalIndividual(OptimizationCase& evaluator);
 	ClassicalIndividual(const ClassicalIndividual& other);
 
 	void tryToMutateAllGensRandomly(double chanceForGenMutation);

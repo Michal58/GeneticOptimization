@@ -2,9 +2,9 @@
 #include <random>
 #include <numeric>
 #include "../Randomizers/Mt19937Randomizer.h"
-#include "../../OptimazationTemplates/Randomizer.h"
-#include "../../OptimazationTemplates/Individual.h"
-#include "../../OptimazationTemplates/GeneticOptimizer.h"
+#include "../../OptimizationTemplates/Randomizer.h"
+#include "../../OptimizationTemplates/Individual.h"
+#include "../../OptimizationTemplates/GeneticOptimizer.h"
 
 class GreedyHillClimber: public GeneticOptimizer
 {
@@ -32,7 +32,7 @@ public:
 		TURN_OFF_CONFIRMATION
 	};
 
-	GreedyHillClimber(OptimazationCase& caseToInitialize,bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation);
+	GreedyHillClimber(OptimizationCase& caseToInitialize,bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation);
 	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation, GeneticOptimizerTurnOff turnOffConfirmation);
 	GreedyHillClimber(Individual& individualToOptimize, bool shouldMixOrderOfOptimazation);
 	GreedyHillClimber(Individual& initialIndividual, bool shouldMixOrderOfOptimazation, int countOfTheSameIndividualOptimazations);

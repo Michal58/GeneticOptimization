@@ -1,6 +1,6 @@
 #include "GeneticOptimizer.h"
 
-GeneticOptimizer::GeneticOptimizer(OptimazationCase& caseInstance):
+GeneticOptimizer::GeneticOptimizer(OptimizationCase& caseInstance):
 	caseInstance(caseInstance) {}
 
 GeneticOptimizer::~GeneticOptimizer() {}

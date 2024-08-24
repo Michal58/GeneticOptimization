@@ -7,7 +7,7 @@ class EntropyBasedInitializer: public InitializerOfDistancesLookup
 {
 	const static int ENTROPY_MINUEND = 2;
 
-	OptimazationCase& caseToSolve;
+	OptimizationCase& caseToSolve;
 	GenesFrequenciesLookup& frequenciesOfGenesLookup;
 
 	void createSingletonClusters(DistancesLookup& distancesToInitialize);
@@ -22,7 +22,7 @@ class EntropyBasedInitializer: public InitializerOfDistancesLookup
 
 public:
 
-	EntropyBasedInitializer(OptimazationCase& caseToSolve, GenesFrequenciesLookup& frequenciesOfGenesLookup);
+	EntropyBasedInitializer(OptimizationCase& caseToSolve, GenesFrequenciesLookup& frequenciesOfGenesLookup);
 	void setFrequenciesOfGenesLookup(GenesFrequenciesLookup& frequenciesOfGenesLookup);
 	void initializeDistancesLookup(DistancesLookup& distancesToInitialize) override;
 };

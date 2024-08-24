@@ -2,7 +2,7 @@
 
 #include <random>
 #include <iostream>
-#include "../../OptimazationTemplates/Randomizer.h"
+#include "../../OptimizationTemplates/Randomizer.h"
 #undef min
 #undef max
 

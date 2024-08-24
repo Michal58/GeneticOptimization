@@ -13,7 +13,7 @@ void ManagerOfRunArrangement::createRunArrangement(StopCriterium* arrangedStopCr
 	this->arrangedOptimizer = arrangedOptimizer;
 }
 
-ManagerOfRunArrangement::ManagerOfRunArrangement(OptimazationCase& givenCaseToSolve) :
+ManagerOfRunArrangement::ManagerOfRunArrangement(OptimizationCase& givenCaseToSolve) :
 	givenCaseToSolve(givenCaseToSolve)
 {
 	this->createdRunArrangement = nullptr;

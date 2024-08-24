@@ -1,4 +1,4 @@
-#include "OptimazationCase.h"
+#include "OptimizationCase.h"
 
 DomainIterator* const DomainIterator::FINISHED_ITERATOR_SINGLETON = new FinishedIterator;
 

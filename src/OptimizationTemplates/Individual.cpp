@@ -22,7 +22,7 @@ double Individual::getEvaluatedFitness()
 	return memoizedFitness;
 }
 
-Individual::Individual(OptimazationCase& evaluator):
+Individual::Individual(OptimizationCase& evaluator):
 	evaluator(evaluator)
 {
 	genotype = new std::vector<int>(evaluator.getCountOfDimensions());
@@ -114,7 +114,7 @@ std::vector<int>* Individual::copyGenotype()
 	return new std::vector<int>(*genotype);
 }
 
-OptimazationCase& Individual::getOptimazationCase()
+OptimizationCase& Individual::getOptimazationCase()
 {
 	return evaluator;
 }

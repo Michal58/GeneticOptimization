@@ -1,7 +1,7 @@
 #pragma once
 #include <unordered_set>
 #include "../CommonComponents/Hashing/PointerBaseHasher.h"
-#include "../OptimazationTemplates/GeneticOptimizer.h"
+#include "../OptimizationTemplates/GeneticOptimizer.h"
 #include "P3Individual.h"
 #include "Pyramid.h"
 
@@ -21,7 +21,7 @@ class ParameterLessPopulationPyramid: public GeneticOptimizer
 
 public:
 
-	ParameterLessPopulationPyramid(OptimazationCase& caseInstance);
+	ParameterLessPopulationPyramid(OptimizationCase& caseInstance);
 	~ParameterLessPopulationPyramid();
 
 	bool isIndividualDistinct(P3Individual& possibleDistinctIndividual);

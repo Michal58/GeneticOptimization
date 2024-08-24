@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OptimazationCase.h"
+#include "OptimizationCase.h"
 #include "Randomizer.h"
 #include <iostream>
 #include <vector>
@@ -17,9 +17,9 @@ class Individual
 {
 protected:
 
-	friend class OptimazationCase;
+	friend class OptimizationCase;
 
-	OptimazationCase& evaluator;
+	OptimizationCase& evaluator;
 
 	bool wasEvaluated;
 	double memoizedFitness;
@@ -33,7 +33,7 @@ protected:
 
 public:
 
-	Individual(OptimazationCase& evaluator);
+	Individual(OptimizationCase& evaluator);
 	Individual(const Individual& other);
 	virtual ~Individual();
 
@@ -61,5 +61,5 @@ public:
 	void forcelyMemoizeFitness(double newFitness);
 
 	std::vector<int>* copyGenotype();
-	OptimazationCase& getOptimazationCase();
+	OptimizationCase& getOptimazationCase();
 };
